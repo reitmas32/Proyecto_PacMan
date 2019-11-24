@@ -1,0 +1,181 @@
+/**!<Guardas de inclusión*/
+#ifndef GRAFO_HPP
+#define GRAFO_HPP
+
+/**!<Bibliotecas necesarias*/
+#include <iostream>
+#include <string>
+#include <list>
+#include <cstring>
+#include "Recursos/MapTemplate/Map.hpp"
+#include <vector>
+#include "Recursos/Vertex/Vertex.hpp"
+#include "Recursos/Administrador/Administrador.hpp"
+#include "Recursos/Couple/Couple.hpp"
+#include "Recursos/DLLTemplate/DLL.hpp"
+
+/**
+ *@class Graph
+ *@brief Representa un grafo
+ */
+class Graph
+{
+private:
+
+	/**!<Lista de vertex en el grafo*/
+	Map<std::string,Vertex*> *vertices;
+
+	/**!<*/
+	Administrador admon;
+
+	/**
+	 *@brief Método que imprime el value de una couple
+	 *
+	 *@param tmp Couple que se imprimira
+	 */
+	static void printCouple(Couple<std::string,Vertex*> *tmp);
+
+	/**
+	 *@brief Método que imprime el value de una couple y sus vecinos
+	 *
+	 *@param tmp Couple que se imprimira
+	 */
+	static void printCoupleN(Couple<std::string,Vertex*> *tmp);
+
+public:
+	/**
+	 *@brief Método constructor del grafo
+	 */
+	Graph();
+
+	/**
+	 *@brief Método destructor del grafo
+	 */
+	~Graph();
+
+	/**
+	 *@brief Método que agrega un vertex al grafo
+	 *
+	 *@param v Vertex que se agregara al grafo
+	 *
+	 *@return true si se logro agregar el vertex al grafo, en caso contrario retorna false
+	 */
+	bool add_vertex( Vertex *v );
+
+	/**
+	 *@brief Método que conecta dos vertex dentro del grafo
+	 *
+	 *@param edge1 Nombre del primer vertex a conectar
+	 *
+	 *@param edge2 Nombre del segundo vertex a conectar
+	 *
+	 *@return true si se lograron conectar los vertex, en caso contrario retorna false
+	 */
+	bool add_edge( std::string edge1, std::string edge2 );
+
+	/**
+	 *@brief Método que conecta dos vertex de forma dirigida dentro del grafo
+	 *
+	 *@param dge1 Nombre del primer vertex a conectar
+	 *
+	 *@param edge2 Nombre del segundo vertex a conectar
+	 *
+	 *@return true si se lograron conectar los vertex, en caso contrario retorna false
+	 */
+	bool add_edge_directed( std::string edge1, std::string edge2 );
+
+	/**
+	 *@brief Método que imprime los datos de los vertex en el grafo
+	 */
+	void print();
+
+	/**
+	 *@brief Método que imprime los vecinos de los vertex en el grafo
+	 */
+	void printNeighbor();
+
+	/**
+	 *@brief Método que nos regresa un vertex del grafo
+	 *
+	 *@param Vname Nombre del vertex a buscar
+	 *
+	 *@return Regresa un vertex
+	 */
+	Vertex *get_Vertex(std::string Vname);
+
+	/**
+	 *@brief Método que busca por anchura Breadth First Search
+	 *
+	 *@param nameStart Nombre del vertex donde iniciara la busqueda
+	 */
+	void BSF(std::string nameStart);
+
+	/**
+	 *@brief Método que regresa el map del grafo
+	 *
+	 *@return Map del grafo
+	 */
+	Map<std::string,Vertex*> *get_map();
+
+	/**
+	 *@brief 
+	 *
+	 *@param nameStart
+	 *
+	 *@return 
+	 */
+	std::vector<Vertex> dfs_to(std::string nameStart);
+
+	/**
+	 *@brief Método que conecta dos vertex con peso
+	 *
+	 *@param edge1 Nombre del primer vertex a conectar
+	 *
+	 *@param edge2 Nombre del segundo vertex a conectar
+	 *
+	 *@param weigth Peso de la conexión entre los vertex
+	 *
+	 *@return true si se conectaron los vertex, en caso contrario retorna false
+	 */
+	bool add_edge_weighted( std::string edge1, std::string edge2, int weigth);
+
+	/**
+	 *@brief Método que busca en el grafo por profundidad, Depth First Search
+	 *
+	 *@param nameStart Nombre del vertex de inicio
+	 */
+	void DFS(std::string nameStart);
+
+	/**
+	 *@brief
+	 *
+	 *@param nameV
+	 *
+	 *@param time
+	 */
+	void dfs_traverse(std::string nameV, size_t* time);
+	
+	/**
+	 *@brief
+	 *
+	 *@param nameV
+	 *
+	 *@param time
+	 *
+	 *@param v
+	 */
+	void dfs_traverse_to(std::string nameV, int* time, std::vector<Vertex>* v);
+
+	/**
+	 *@brief
+	 */
+	void create_Graph();
+
+	/**
+	 *@brief
+	 */
+	void cargar_Plano();
+
+};
+
+#endif
