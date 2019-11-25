@@ -219,6 +219,64 @@ void Graph::BFS(std::string nameStart){
 	delete q;
 }
 
+int Graph::BFS_to(std::string nameStart, std::string nameEnd){
+	/*Obtenemos el mapa*/
+	Map<std::string, Vertex*>* map = this -> get_map();
+
+	/*Obtenemos la DLL del map*/
+	DLL<Couple<std::string,Vertex*>*> *list = map ->getMap();
+
+	/*Reseteamos todos los atributos de un vertex*/
+	list ->Traverse(setDefault);
+
+	/*Buscamos al primer vertex en el grafo*/
+	vertices -> search(nameStart);
+
+	/*Obtenemos a la pareja que contiene al vertex*/
+	Couple<std::string,Vertex*> *couple = vertices -> getCursor();
+
+	/*Obtenemos al vertex*/
+	Vertex *start = couple -> getValue();
+
+	/*Creamo a la pila*/
+	Stack<Vertex*> *q = new Stack<Vertex*>();
+
+	/*Agregamos a start a la pila*/
+	q -> Push(start);
+
+	while(!q -> IsEmpty()){
+		Vertex *v = q -> Pop();
+
+		/*Obtenemos a los vecinos del vertex v*/
+		DLL<Vertex*> *neighbors = v ->get_neighbors();
+
+		/*Recorremos todos los vecinos de v*/
+		for(Node<Vertex*> *it = neighbors -> getFirst(); it != NULL; it = it -> next){
+
+			Vertex *w = it -> data;
+
+			if(w -> get_color() == Vertex::Colors::BLACK){
+				w -> set_color(Vertex::Colors::GRAY);
+
+				int dist = v -> get_distance();
+				w -> set_distance(dist +1);
+				w -> set_predecesor(v -> get_name());
+				q -> Push(w);
+				if(w->get_name() == nameEnd){
+					/*Eliminamos la pila*/
+					delete q;
+					return 0;
+				}
+			}
+		}
+		v -> set_color(Vertex::Colors::WHITE);	
+	}
+
+	/*Eliminamos la pila*/
+	delete q;
+	return 0;
+}
+
 Stack<std::string> *Graph::goTo(std::string start, std::string end)
 {
 	this ->BFS(start);
@@ -256,6 +314,45 @@ Stack<std::string> *Graph::goTo(std::string start, std::string end)
 	return pila;
 
 }
+
+Stack<std::string> *Graph::goTo2(std::string start, std::string end)
+{
+	this ->BFS_to(start,end);
+	Stack<std::string> *pila = new Stack<std::string>();
+
+	/*Buscamos a end en el map*/
+	vertices ->search(end);
+
+	/*Obtenemos a la couple que contiene a end*/
+	Couple<std::string,Vertex*> *coupleV = vertices -> getCursor();
+
+	/*Obtenemos a end*/
+	Vertex *v = coupleV -> getValue();
+
+	pila ->Push(v -> get_name());
+
+	std::string s = v -> get_predecesor();
+
+	while(s != start){
+		pila ->Push(s);
+
+		/*Buscamos a s en el map*/
+		vertices -> search(s);
+
+		/*Obtenemos a la couple que contiene a s*/
+		Couple<std::string,Vertex*> *coupleW = vertices -> getCursor();
+
+		/*Obtenemos a s*/
+		Vertex *w = coupleW -> getValue();
+
+		s = w -> get_predecesor();
+	}
+	pila ->Push(s);
+
+	return pila;
+
+}
+
 #if 0
 
 void Graph::create_Graph(){

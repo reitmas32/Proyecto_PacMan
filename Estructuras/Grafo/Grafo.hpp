@@ -119,6 +119,8 @@ public:
 	 */
 	void BFS(std::string nameStart);
 
+	int BFS_to(std::string nameStart, std::string nameEnd);
+
 	/**
 	 *@brief Método que regresa el map del grafo
 	 *
@@ -159,6 +161,8 @@ public:
 	 *@return Stack con el camino a seguir
 	 */
 	Stack<std::string> *goTo(std::string start, std::string end);
+
+	Stack<std::string> *goTo2(std::string start, std::string end);
 
 };
 
