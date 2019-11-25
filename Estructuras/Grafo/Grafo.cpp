@@ -14,6 +14,15 @@ void Graph::printCoupleN(Couple<std::string,Vertex*> *tmp){
 	std::cout << std::endl;
 	v ->print_neighbors();
 }
+
+void Graph::setDefault(Couple<std::string,Vertex*>*tmp){
+	Vertex *v = tmp -> getValue();
+
+	v -> set_color(Vertex::Colors::BLACK);
+	v -> set_distance(0);
+	v -> set_predecesor("Nil");
+
+}
 //================================================
 Graph::Graph()
 {
@@ -158,128 +167,96 @@ void print_list(std::list<Vertex> list){
 }
 #endif
 
-#if 0
-void Graph::BSF(std::string nameStart){
+void Graph::BFS(std::string nameStart){
+	/*Obtenemos el mapa*/
+	Map<std::string, Vertex*>* map = this -> get_map();
 
-	for(auto &v: this->vertices){
-		v.second.set_color(Vertex::Colors::BLACK);
-		v.second.set_distance(0);
-		v.second.set_predecesor("Nil");
-	}
-	
-	auto &start = this->vertices.find(nameStart)->second;
-	start.set_color(Vertex::Colors::GRAY);
-	
-	#if 1
+	/*Obtenemos la DLL del map*/
+	DLL<Couple<std::string,Vertex*>*> *list = map ->getMap();
 
-	std::list<Vertex> q;
-	q.push_front(start);
+	/*Reseteamos todos los atributos de un vertex*/
+	list ->Traverse(setDefault);
 
-	while(!q.empty()){
+	/*Buscamos al primer vertex en el grafo*/
+	vertices -> search(nameStart);
 
-		Vertex v = q.front();
-		q.pop_front();
-		
-		for(auto &w: this->vertices.find(v.get_name())->second.get_neighbors()){
+	/*Obtenemos a la pareja que contiene al vertex*/
+	Couple<std::string,Vertex*> *couple = vertices -> getCursor();
 
-			if(this->vertices.find(w.get_name())->second.get_color() == Vertex::Colors::BLACK){
-				this->vertices.find(w.get_name())->second.set_color(Vertex::Colors::GRAY);
-				
-				int dist = this->vertices.find(v.get_name())->second.get_distance();
-				this->vertices.find(w.get_name())->second.set_distance(dist+1);
-				this->vertices.find(w.get_name())->second.set_predecesor(v.get_name());
-				q.push_back(w);
+	/*Obtenemos al vertex*/
+	Vertex *start = couple -> getValue();
+
+	/*Creamo a la pila*/
+	Stack<Vertex*> *q = new Stack<Vertex*>();
+
+	/*Agregamos a start a la pila*/
+	q -> Push(start);
+
+	while(!q -> IsEmpty()){
+		Vertex *v = q -> Pop();
+
+		/*Obtenemos a los vecinos del vertex v*/
+		DLL<Vertex*> *neighbors = v ->get_neighbors();
+
+		/*Recorremos todos los vecinos de v*/
+		for(Node<Vertex*> *it = neighbors -> getFirst(); it != NULL; it = it -> next){
+
+			Vertex *w = it -> data;
+
+			if(w -> get_color() == Vertex::Colors::BLACK){
+				w -> set_color(Vertex::Colors::GRAY);
+
+				int dist = v -> get_distance();
+				w -> set_distance(dist +1);
+				w -> set_predecesor(v -> get_name());
+				q -> Push(w);
 			}
 		}
-		this->vertices.find(v.get_name())->second.set_color(Vertex::Colors::WHITE);
+		v -> set_color(Vertex::Colors::WHITE);	
 	}
 
-	#endif
+	/*Eliminamos la pila*/
+	delete q;
 }
 
-void Graph::dfs_traverse(std::string nameV, size_t* time){
-	
-	++*time;
+Stack<std::string> *Graph::goTo(std::string start, std::string end)
+{
+	this ->BFS(start);
+	Stack<std::string> *pila = new Stack<std::string>();
 
-	this->vertices.find(nameV)->second.set_discovery_time(*time);
-	this->vertices.find(nameV)->second.set_color(Vertex::Colors::GRAY);
+	/*Buscamos a end en el map*/
+	vertices ->search(end);
 
-	for( auto &u: this->vertices.find(nameV)->second.get_neighbors()){
-		if(this->vertices.find(u.get_name())->second.get_color() == Vertex::Colors::BLACK){
-			this->vertices.find(u.get_name())->second.set_predecesor(nameV);
-			dfs_traverse(u.get_name(), time);
-		}
+	/*Obtenemos a la couple que contiene a end*/
+	Couple<std::string,Vertex*> *coupleV = vertices -> getCursor();
+
+	/*Obtenemos a end*/
+	Vertex *v = coupleV -> getValue();
+
+	pila ->Push(v -> get_name());
+
+	std::string s = v -> get_predecesor();
+
+	while(s != start){
+		pila ->Push(s);
+
+		/*Buscamos a s en el map*/
+		vertices -> search(s);
+
+		/*Obtenemos a la couple que contiene a s*/
+		Couple<std::string,Vertex*> *coupleW = vertices -> getCursor();
+
+		/*Obtenemos a s*/
+		Vertex *w = coupleW -> getValue();
+
+		s = w -> get_predecesor();
 	}
+	pila ->Push(s);
 
-	this->vertices.find(nameV)->second.set_color(Vertex::Colors::WHITE);
-
-	++*time;
-
-	this->vertices.find(nameV)->second.set_finish_time(*time);
-}
-
-void Graph::DFS(std::string nameStart){
-
-	size_t time = 0;
-
-	for(auto &v: this->vertices){
-		v.second.set_color(Vertex::Colors::BLACK);
-		v.second.set_distance(0);
-		v.second.set_predecesor("Nil");
-		v.second.set_discovery_time(0);
-		v.second.set_finish_time(0);
-	}
-
-	dfs_traverse(nameStart, &time);
-	
-}
-
-void Graph::dfs_traverse_to(std::string nameV, int* time, std::vector<Vertex>* lista){
-
-	++*time;
-	
-	this->vertices.find(nameV)->second.set_discovery_time(*time);
-	this->vertices.find(nameV)->second.set_color(Vertex::Colors::GRAY);
-
-	for( auto &u: this->vertices.find(nameV)->second.get_neighbors()){
-		if(this->vertices.find(u.get_name())->second.get_color() == Vertex::Colors::BLACK){
-			this->vertices.find(u.get_name())->second.set_predecesor(nameV);
-			dfs_traverse_to(u.get_name(), time, lista);
-		}
-	}
-
-	this->vertices.find(nameV)->second.set_color(Vertex::Colors::WHITE);
-
-	++*time;
-
-	this->vertices.find(nameV)->second.set_finish_time(*time);
-
-	lista->push_back(this->vertices.find(nameV)->second);
-}
-
-
-std::vector<Vertex> Graph::dfs_to(std::string nameStart){
-	static int time = 0;
-
-	for(auto &v: this->vertices){
-		v.second.set_color(Vertex::Colors::BLACK);
-		v.second.set_predecesor("Nil");
-		v.second.set_discovery_time(0);
-		v.second.set_finish_time(0);
-	}	
-
-	std::vector<Vertex> lista;
-
-	dfs_traverse_to(nameStart, &time, &lista);
-
-	std::sort (lista.begin(), lista.end(),
-		[](Vertex& lhs, Vertex& rhs)->bool{
-			return lhs.get_finish_time() > rhs.get_finish_time();
-		} );
-
-	return lista;
+	return pila;
 
 }
+#if 0
 
 void Graph::create_Graph(){
 	//

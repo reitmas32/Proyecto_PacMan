@@ -53,9 +53,10 @@ void Vertex::print(){
 		case Vertex::Colors::GRAY: color = "GRAY"; break;
 		case Vertex::Colors::WHITE: color = "WHITE"; break;
 	}
+	std::cout << " Nombre: " << this -> get_name()<< " Distancia: " << this -> get_distance() << " Color: " << color << " Predecesor: " << this -> get_predecesor() <<  "\n";
 	//std::cout << this->name << " " << this->distance <<" "<< color<<" "<<this->predecesor<<" "<<this->weigth<<" "<<this->discovery_time <<"/"<< this->finish_time;
-	std::cout << this->name <<", x: "<< this->x <<", y: "<< this->y << ", d: "<< this->distance;
-	std::cout << "\n";
+	//std::cout << this->name <<", x: "<< this->x <<", y: "<< this->y << ", d: "<< this->distance;
+	//std::cout << "\n";
 }
 
 void Vertex::set_distance( int d){

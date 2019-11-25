@@ -32,6 +32,11 @@ class Node{
 		 *
 		 */
 		Node(Item _data);
+
+		/**
+		 *@brief Método constructor de los Nodos
+		 */
+		Node();
 };
 
 /**
@@ -228,12 +233,33 @@ class DLL{
 		 *
 		 */
 		void Traverse(void(*pfun)(Item));
+
+		/**
+		 *@brief Método que regresa el primer nodo de la DLL
+		 *
+		 *@return Primer nodo de la DLL
+		 */
+		Node<Item> *getFirst();
+
+		/**
+		 *@brief Método que regresa el ultimo nodo de la DLL
+		 *
+		 *@return Ultimo nodo de la DLL
+		 */
+		Node<Item> *getLast();
 };
 
 //============Métodos privados=============
 template<class Item>
 Node<Item>::Node(Item _data){
 	data = _data;
+	next = NULL;
+	prev = NULL;
+}
+
+template <class Item>
+Node<Item>::Node(){
+	data = NULL;
 	next = NULL;
 	prev = NULL;
 }
@@ -636,4 +662,13 @@ void DLL<Item>::Traverse(void (*pfun)(Item)){
 	}
 }
 
+template <class Item>
+Node<Item>* DLL<Item>::getFirst(){
+	return first;
+}
+
+template <class Item>
+Node<Item>* DLL<Item>::getLast(){
+	return last;
+}
 #endif

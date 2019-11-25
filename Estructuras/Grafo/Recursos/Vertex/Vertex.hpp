@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include "Recursos/DLLTemplate/DLL.hpp"
+#include "../DLLTemplate/DLL.hpp"
 #include <vector>
 #include <algorithm>
 

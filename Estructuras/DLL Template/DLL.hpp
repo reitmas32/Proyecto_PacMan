@@ -32,6 +32,11 @@ class Node{
 		 *
 		 */
 		Node(Item _data);
+
+		/**
+		 *@brief Método que retorna la data del nodo
+		 */
+		Item getData();
 };
 
 /**
@@ -228,6 +233,23 @@ class DLL{
 		 *
 		 */
 		void Traverse(void(*pfun)(Item));
+
+		/**
+		 *@brief Método que regresa el primer nodo de la DLL
+		 *
+		 *@return Primer nodo de la DLL
+		 */
+		Node<Item> *getFirst();
+
+		/**
+		 *@brief Método que regresa el ultimo nodo de la DLL
+		 *
+		 *@return Ultimo nodo de la DLL
+		 */
+		Node<Item> *getLast();
+
+		int getNum(){return 10;}
+
 };
 
 //============Métodos privados=============
@@ -236,6 +258,11 @@ Node<Item>::Node(Item _data){
 	data = _data;
 	next = NULL;
 	prev = NULL;
+}
+
+template<class Item>
+Item Node<Item>::getData(){
+	return data;
 }
 
 template <class Item>
@@ -634,6 +661,16 @@ void DLL<Item>::Traverse(void (*pfun)(Item)){
 		/*Se manda la información del nodo a la función que maneja Items*/
 		pfun(it -> data);
 	}
+}
+
+template <class Item>
+Node<Item>* DLL<Item>::getFirst(){
+	return first;
+}
+
+template <class Item>
+Node<Item>* DLL<Item>::getLast(){
+	return last;
 }
 
 #endif

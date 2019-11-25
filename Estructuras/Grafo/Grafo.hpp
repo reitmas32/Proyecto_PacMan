@@ -13,6 +13,7 @@
 #include "Recursos/Administrador/Administrador.hpp"
 #include "Recursos/Couple/Couple.hpp"
 #include "Recursos/DLLTemplate/DLL.hpp"
+#include "Recursos/StackTemplate/Stack.hpp"
 
 /**
  *@class Graph
@@ -41,6 +42,14 @@ private:
 	 *@param tmp Couple que se imprimira
 	 */
 	static void printCoupleN(Couple<std::string,Vertex*> *tmp);
+
+	/**
+	 *@brief Método que resetea los valores de un grafo
+	 *
+	 *@param tmp Couple que se editara su vertex
+	 */
+	static void setDefault(Couple<std::string,Vertex*>*tmp);
+
 
 public:
 	/**
@@ -108,7 +117,7 @@ public:
 	 *
 	 *@param nameStart Nombre del vertex donde iniciara la busqueda
 	 */
-	void BSF(std::string nameStart);
+	void BFS(std::string nameStart);
 
 	/**
 	 *@brief Método que regresa el map del grafo
@@ -116,15 +125,6 @@ public:
 	 *@return Map del grafo
 	 */
 	Map<std::string,Vertex*> *get_map();
-
-	/**
-	 *@brief 
-	 *
-	 *@param nameStart
-	 *
-	 *@return 
-	 */
-	std::vector<Vertex> dfs_to(std::string nameStart);
 
 	/**
 	 *@brief Método que conecta dos vertex con peso
@@ -140,33 +140,6 @@ public:
 	bool add_edge_weighted( std::string edge1, std::string edge2, int weigth);
 
 	/**
-	 *@brief Método que busca en el grafo por profundidad, Depth First Search
-	 *
-	 *@param nameStart Nombre del vertex de inicio
-	 */
-	void DFS(std::string nameStart);
-
-	/**
-	 *@brief
-	 *
-	 *@param nameV
-	 *
-	 *@param time
-	 */
-	void dfs_traverse(std::string nameV, size_t* time);
-	
-	/**
-	 *@brief
-	 *
-	 *@param nameV
-	 *
-	 *@param time
-	 *
-	 *@param v
-	 */
-	void dfs_traverse_to(std::string nameV, int* time, std::vector<Vertex>* v);
-
-	/**
 	 *@brief
 	 */
 	void create_Graph();
@@ -175,6 +148,17 @@ public:
 	 *@brief
 	 */
 	void cargar_Plano();
+
+	/**
+	 *@brief Método que indica el camino a seguir de un vertex a otro
+	 *
+	 *@param start Vertex de inicio
+	 *
+	 *@param end Vertex de final
+	 *
+	 *@return Stack con el camino a seguir
+	 */
+	Stack<std::string> *goTo(std::string start, std::string end);
 
 };
 

@@ -4,8 +4,8 @@
 
 /**!<Bibliotecas necesarias*/
 #include <iostream>
-#include "Recursos/DLL.hpp"
-#include "Recursos/Couple.hpp"
+#include "../DLLTemplate/DLL.hpp"
+#include "../Couple/Couple.hpp"
 
 /**
  *@class Map
