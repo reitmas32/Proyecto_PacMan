@@ -1,23 +1,45 @@
+/**!<Guardas de inclusión*/
 #ifndef FIGURA_HPP
 #define FIGURA_HPP
 
-/**
- * Biblioteca de la clase Cuadro
- **/
+/**!<Biblioteca de cuadro*/
 #include "../Graphics_Engine/Cuadro.hpp"
 
 /**
- * Clase Figura es una clase intermedia entre Cuadro y Pacman o Fantasma
- **/
+ *@class Figura
+ *@brief Representa a una figura capaz de moverse en el tablero
+ */
 class Figura : public Cuadro{
-private:
-    
+
 public:
+    /**
+     *@brief Método cosntructor de Figura
+     */
     Figura();
+
+    /**
+     *@brief Método destructor de Figura
+     */
     ~Figura();
+
+    /**
+     *@brief
+     */
     void mueve_arriba();
+
+    /**
+     *@brief
+     */
     void mueve_abajo();
+
+    /**
+     *@brief
+     */
     void mueve_derecha();
+
+    /**
+     *@brief
+     */
     void mueve_izquierda();
 };
 

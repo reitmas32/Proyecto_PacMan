@@ -1,6 +1,8 @@
+/**!<Guardas de inclusión*/
 #ifndef GHOST_HPP
 #define GHOST_HPP
 
+/**!<Bibliotecas necesarias*/
 #include <sstream>
 
 #include "../Graphics_Engine/Cuadro.hpp"
@@ -15,22 +17,72 @@
 
 #include "../../Estructuras/StackTemplate/Stack.hpp"
 
+/**
+ *@class Fantasma
+ *@brief Representa un fantasma
+ */
+
 class Fantasma : public Figura{
 private:
+    /**!<*/
     int dir;
+
+    /**!<*/
     int time;
 public:
+    /**!<*/
     Stack<std::string> *roadToPacman;
+
+    /**
+     *@brief Método constructor del Fantasma
+     */
     Fantasma(/* args */);
+
+    /**
+     *@brief Método constructor del Fantasma
+     *
+     *@param x
+     *
+     *@param y
+     *
+     *@param colorSolido[]
+     *
+     *@param colorDecora[]
+     */
     Fantasma(int x, int y, int colorSolido[], int colorDecora[]);
+
+    /**
+     *@brief Método destructor del Fantasma
+     */
     ~Fantasma();
 
+    /** 
+     *@brief
+     */
     void pinta();
 
+    /**
+     *@brief
+     */
     int getDir(){return dir;}
+
+    /** 
+     *@brief
+     */
     int getTime(){return time;}
 
+    /** 
+     *@brief
+     *
+     *@param dir
+     */
     void setDir(int dir){this->dir = dir;}
+
+    /**
+     *@brief
+     *
+     *@param
+     */
     void setTime(int time){this->time = time;}
 };
 

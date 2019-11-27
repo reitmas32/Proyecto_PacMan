@@ -1,3 +1,4 @@
+/**!<Guardas de inclusión*/
 #ifndef TABLERO_HPP
 #define TABLERO_HPP
 
@@ -17,48 +18,108 @@
 
 #include <fstream>
 
-//Convierte de int a string
+/**
+ *@brief Función que convierte un int a string
+ *
+ *@param num Int que se convertira a string
+ *
+ *@return el int convertido a string
+ */
 std::string intToString(int num){
     std::stringstream sout;
     sout << num;
     return sout.str();
 }
 
-bool cmpString(std::string val1, std::string val2){
-    return val1 == val2;
-}
-
+/**
+ *@class Tablero
+ *@brief Tablero del juego de pacman
+ */
 class Tablero
 {
 public:
-    
+    /**!<*/
     int posPacman;
+
+    /**!<*/
     int posFantasma;
 
+    /**!<*/
     size_t Columnas;
+
+    /**!<*/
     size_t Filas;
+
+    /**!<*/
     uint8_t** mapa;
+
+    /**!<*/
     Cuadro** tablero;
+
+    /**!<*/
     size_t vidas;
+
+    /**!<*/
     int ColorPared[3];
+
+    /**!<*/
     int ColorCamino[3];
+
+    /**!<*/
     size_t puntos;
+
+    /**!<*/
     Graph* grafo;
 public:
+    /**
+     *@brief Método constructor del Tablero
+     */
     Tablero();
+
+    /**
+     *@brief Método constructor del Tablero
+     *
+     *@param mapa
+     *
+     *@pram ColorPared[]
+     *
+     *@param ColorCamino[]
+     */
     Tablero(int mapa, int ColorPared[], int ColorCamino[]);
+
+    /** 
+     *@brief Método destructor del Tablero
+     */
     ~Tablero();
 
+    /**
+     *@brief
+     */
     void creaMundo();
 
+    /**
+     *@brief Método que crea el camino por el cual pueden caminar los fantasmas y pacman
+     */
     void creaGrafo();
 
+    /**
+     *@brief
+     */
     void pinta();
 
+    /**
+     *@brief
+     */
     bool colision(Figura figura);
 
+    /**
+     *@brief
+     */
     void repinta();
 
+    /**
+     *@brief
+     */
     bool deadPacman(Pacman p, Fantasma* f);
 };
 
@@ -74,6 +135,7 @@ Tablero::Tablero(int mapa, int ColorPared[], int ColorCamino[]){
         this->ColorCamino[i] = ColorCamino[i]; 
     }
     
+    /*Creamo el mapa*/
     switch (mapa)
     {
     case MAPAS::LevelOne:
@@ -137,39 +199,39 @@ void Tablero::creaMundo(){
 
 void Tablero::creaGrafo(){
     this -> grafo = new Graph();
-        /*Creamos los vertices*/
-        for(size_t i = 0; i<this ->Filas; i++){
-            for(size_t j=0; j<this ->Columnas; j++){
-                if(this -> mapa[i][j] == 0 || this -> mapa[i][j] == 3)
-                    grafo -> add_vertex(new Vertex(intToString(i+j*this -> Columnas)));
+    /*Creamos los vertices*/
+    for(size_t i = 0; i<this ->Filas; i++){
+        for(size_t j=0; j<this ->Columnas; j++){
+            if(this -> mapa[i][j] == 0 || this -> mapa[i][j] == 3)
+                grafo -> add_vertex(new Vertex(intToString(i+j*this -> Columnas)));
+        }
+    }
+
+    /*Los conectamos horizontalmente*/
+   for(size_t i=0; i<this -> Filas; i++){
+        for(size_t j =0; j<this -> Columnas; j++){
+            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
+                grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
+            }
+
+            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
+                grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
             }
         }
+    }
 
-        /*Los conectamos horizontalmente*/
-        for(size_t i=0; i<this -> Filas; i++){
-            for(size_t j =0; j<this -> Columnas; j++){
-                if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
-                    grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
-                }
-
-                if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
-                    grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
-                }
+    /*Los conectamos verticalmente*/
+    for(size_t i=0; i<this -> Filas; i++){
+        for(size_t j =0; j<this -> Columnas; j++){
+            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
+                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
             }
-        }
 
-        /*Los conectamos verticalmente*/
-        for(size_t i=0; i<this -> Filas; i++){
-            for(size_t j =0; j<this -> Columnas; j++){
-                if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
-                    grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-                }
-
-                if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
-                    grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-                }
+            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
+                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
             }
-        }
+       }
+    }
 }
 
 void Tablero::pinta(){

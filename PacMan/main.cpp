@@ -3,13 +3,33 @@
 
 using namespace miniwin;
 
+/**
+ *@brief Función que convierte una string a un int
+ *
+ *@param num String que se convertira a int
+ *
+ *@return la string convertida a int
+ */
 size_t stringToInt(std::string num){
    return stoi(num,nullptr,10);
 }
 
-bool compareCouple(Couple<std::string,Vertex*>* key1, Couple<std::string,Vertex*>* key2){
-	return key1 -> getKey() == key2 ->getKey();
+
+
+/**
+ *@brief Función que compara dos String
+ *
+ *@param val1 Primera string a comparar
+ *
+ *@param val2 Segunda string a comparar
+ *
+ *@return true si son iguales las cadenas, en caso contrario retorna false
+ */
+
+bool cmpString(std::string val1, std::string val2){
+    return val1 == val2;
 }
+
 
 void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
     Fantasma f_copia = *f;
@@ -39,6 +59,17 @@ void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
     }
 }
 
+/**
+ *@brief Función que mueve a lso fantasmas
+ *
+ *@param f Fantasma que se movera
+ *
+ *@param T Tablero de juego
+ *
+ *@param p Pacman del tablero
+ *
+ *@param color Color del Fantasma
+ */
 void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
 
 	/*Varibales necesarias*/
