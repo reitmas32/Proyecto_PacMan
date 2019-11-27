@@ -137,34 +137,39 @@ void Tablero::creaMundo(){
 
 void Tablero::creaGrafo(){
     this -> grafo = new Graph();
-    DLL<std::string> listaVertex = DLL<std::string>();
-    for (size_t j = 0; j < this->Filas; j++)
-    {
-        for (size_t i = 0; i < this->Columnas; i++)
-        {
-            if(this->mapa[j][i] == 0){
-                Vertex *v = new Vertex(intToString(i+j*this->Columnas));
-                this->grafo->add_vertex(v);
-                listaVertex.InsertBack(intToString(i+j*this->Columnas));
+        /*Creamos los vertices*/
+        for(size_t i = 0; i<this ->Filas; i++){
+            for(size_t j=0; j<this ->Columnas; j++){
+                if(this -> mapa[i][j] == 0 || this -> mapa[i][j] == 3)
+                    grafo -> add_vertex(new Vertex(intToString(i+j*this -> Columnas)));
             }
         }
-        std::cout<<std::endl;
-    }
 
-    for (size_t j = 0; j < this->Filas; j++)
-    {
-        for (size_t i = 0; i < this->Columnas; i++)
-        {
-            if(this->mapa[j][i] == 0){
-                if(listaVertex.FindIf(intToString(i+j*this->Columnas+1),cmpString)){
-                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString(i+j*this->Columnas+1));
+        /*Los conectamos horizontalmente*/
+        for(size_t i=0; i<this -> Filas; i++){
+            for(size_t j =0; j<this -> Columnas; j++){
+                if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
+                    grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
                 }
-                if(listaVertex.FindIf(intToString(i+(j+1)*this->Columnas+1),cmpString)){
-                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString(i+(j+1)*this->Columnas+1));
+
+                if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
+                    grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
                 }
             }
         }
-    }
+
+        /*Los conectamos verticalmente*/
+        for(size_t i=0; i<this -> Filas; i++){
+            for(size_t j =0; j<this -> Columnas; j++){
+                if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
+                    grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
+                }
+
+                if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
+                    grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
+                }
+            }
+        }
 }
 
 void Tablero::pinta(){

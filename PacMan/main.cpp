@@ -39,7 +39,7 @@ void moveFantasma(Fantasma* f,Tablero T,Pacman* p){
    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
    
-   Stack<std::string> *s = T.grafo->goTo("1", "2");
+   Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
    while (not s->IsEmpty())
    {
       std::cout<<s->Pop()<<std::endl;
@@ -115,8 +115,8 @@ int main() {
 
       for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
       {
-         moveFantasmaRaind(listaFantasmas[i], T, &pacman);
-            //moveFantasma(listaFantasmas[i], T, &pacman);
+         //moveFantasmaRaind(listaFantasmas[i], T, &pacman);
+            moveFantasma(listaFantasmas[i], T, &pacman);
          
          listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
       }

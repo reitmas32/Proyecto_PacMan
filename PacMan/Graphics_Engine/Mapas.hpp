@@ -17,7 +17,7 @@ namespace MAPAS
         //El numero 5 es donde inicia pacman
 
         const size_t COLUMNAS = 19;
-        const size_t FILAS = 25;
+        const size_t FILAS = 23;
         const size_t NUM_FANTASMAS = 3;
         const size_t NUM_PILDORAS = 4;
         const size_t NUM_VIDAS = 1;
@@ -49,8 +49,6 @@ namespace MAPAS
             {2,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,2},
             {2,1,1,0,0,1,0,1,1,1,1,1,0,1,0,0,1,1,2},
             {2,1,0,0,0,0,0,0,0,1,0,0,0,0,3,0,0,1,2},
-            {2,1,0,1,1,1,1,0,0,1,0,0,1,1,1,1,0,1,2},
-            {2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2},
             {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
             {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
         }; 
