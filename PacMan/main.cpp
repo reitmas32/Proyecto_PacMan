@@ -47,30 +47,72 @@ void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
 	size_t x =0,y=0;
 	size_t posIntFantasma =0;
 
-   std::cout << std::endl <<"Paso el case" <<std::endl;
-	Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
-	T.grafo ->print();
-	while (s ->Len() > 5 && !s ->IsEmpty())
-	{
-		/*Convertimso a entero*/
-		posIntFantasma = stringToInt(s ->Pop());
+	/*Obtenemos el mapa del grafo*/
+	Map<std::string,Vertex*> *mapa = T.grafo -> get_map();
 
-		/*Sacamos las coordenadas*/
-		y = posIntFantasma%T.Columnas;
+	/*Buscamos al pacman*/
 
-		x = (posIntFantasma -y)/T.Columnas;
+	mapa -> search(posPacman);
 
-		/*Verificamos que sea una posición valida*/
+	/*obtenemos a la couple que contiene al pacman*/
 
-		if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
-			f ->setPosicion(x,y);
-		}
-		
+	Couple<std::string,Vertex*> *couplePacman = mapa -> getCursor();
+
+	/*Obtenemos al vertex de pacman*/
+
+	Vertex *pacman = couplePacman ->getValue();
+
+	/*Obtenemos a los vecinos de pacman*/
+
+	DLL<Vertex*>* vecinos = pacman -> get_neighbors();
+
+	/*Vertex temporal para recibir la información*/
+	Vertex *tmp;
+
+	/*Dependiendo el fantasma le daremos uan posición de pacman*/
+
+	switch(color){
+		case 0:
+			/*Le damos la posición exacta*/
+			break;
+		case 1: 
+			vecinos -> CursorFirst();
+			vecinos -> Peek(&tmp);
+			posPacman = tmp -> get_name();
+			break;
+		case 2:
+			vecinos -> CursorLast();
+			vecinos -> Peek(&tmp);
+			posPacman = tmp -> get_name();
+			break;
+	}
+
+	std::cout << std::endl <<"Paso el case" <<std::endl;
+	if(posFantasma != posPacman){
+		Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
+		T.grafo ->print();
+		while (s ->Len() > 5 && !s ->IsEmpty())
+		{
+			/*Convertimos a entero*/
+			posIntFantasma = stringToInt(s ->Pop());
+
+			/*Sacamos las coordenadas*/
+			y = posIntFantasma%T.Columnas;
+
+			x = (posIntFantasma -y)/T.Columnas;
+
+			/*Verificamos que sea una posición valida*/
+
+			if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
+				f ->setPosicion(x,y);
+			}
+			
 
 
-		std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
-	}  
-	std::cout << std::endl <<"Paso el while" <<std::endl;
+			std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
+		}  
+		std::cout << std::endl <<"Paso el while" <<std::endl;		
+	}
 }
 
 int main() {
