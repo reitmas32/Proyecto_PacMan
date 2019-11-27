@@ -279,44 +279,6 @@ int Graph::BFS_to(std::string nameStart, std::string nameEnd){
 
 Stack<std::string> *Graph::goTo(std::string start, std::string end)
 {
-	this ->BFS(start);
-	Stack<std::string> *pila = new Stack<std::string>();
-
-	/*Buscamos a end en el map*/
-	vertices ->search(end);
-
-	/*Obtenemos a la couple que contiene a end*/
-	Couple<std::string,Vertex*> *coupleV = vertices -> getCursor();
-
-	/*Obtenemos a end*/
-	Vertex *v = coupleV -> getValue();
-
-	pila ->Push(v -> get_name());
-
-	std::string s = v -> get_predecesor();
-
-	while(s != start){
-		pila ->Push(s);
-
-		/*Buscamos a s en el map*/
-		vertices -> search(s);
-
-		/*Obtenemos a la couple que contiene a s*/
-		Couple<std::string,Vertex*> *coupleW = vertices -> getCursor();
-
-		/*Obtenemos a s*/
-		Vertex *w = coupleW -> getValue();
-
-		s = w -> get_predecesor();
-	}
-	pila ->Push(s);
-
-	return pila;
-
-}
-
-Stack<std::string> *Graph::goTo2(std::string start, std::string end)
-{
 	this ->BFS_to(start,end);
 	Stack<std::string> *pila = new Stack<std::string>();
 

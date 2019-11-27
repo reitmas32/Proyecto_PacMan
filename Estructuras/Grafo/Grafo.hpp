@@ -162,8 +162,7 @@ public:
 	 */
 	Stack<std::string> *goTo(std::string start, std::string end);
 
-	Stack<std::string> *goTo2(std::string start, std::string end);
-
 };
+
 
 #endif
