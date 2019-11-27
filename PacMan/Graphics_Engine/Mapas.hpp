@@ -25,7 +25,7 @@ namespace MAPAS
         const int POS_PACMAN_ORIG_Y = 18;
         const int POS_FANTASMA_ORIG_X = 9;
         const int POS_FANTASMA_ORIG_Y = 10;
-        const int MAX_PUNTAJE = 203;
+        const int MAX_PUNTAJE = 182;
 
         uint8_t Mapa[FILAS][COLUMNAS] = {
             {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},

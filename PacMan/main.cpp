@@ -7,6 +7,10 @@ size_t stringToInt(std::string num){
    return stoi(num,nullptr,10);
 }
 
+bool compareCouple(Couple<std::string,Vertex*>* key1, Couple<std::string,Vertex*>* key2){
+	return key1 -> getKey() == key2 ->getKey();
+}
+
 void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
     Fantasma f_copia = *f;
     if(f->getTime() > 15){
@@ -35,39 +39,38 @@ void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
     }
 }
 
-void moveFantasma(Fantasma* f,Tablero T,Pacman* p){
-   std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
-   std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
-   size_t x =0,y=0;
-   size_t posIntFantasma =0;
+void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
 
-   
-   Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
+	/*Varibales necesarias*/
+	std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
+	std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
+	size_t x =0,y=0;
+	size_t posIntFantasma =0;
 
-   while (s ->Len() > 3)
-   {
-      /*Convertimso a entero*/
-      posIntFantasma = stringToInt(s ->Pop());
+   std::cout << std::endl <<"Paso el case" <<std::endl;
+	Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
+	T.grafo ->print();
+	while (s ->Len() > 5 && !s ->IsEmpty())
+	{
+		/*Convertimso a entero*/
+		posIntFantasma = stringToInt(s ->Pop());
 
-      /*Sacamos las coordenadas*/
-      y = posIntFantasma%T.Columnas;
+		/*Sacamos las coordenadas*/
+		y = posIntFantasma%T.Columnas;
 
-      switch(y){
-        case 0:
-            y +=2;
-            break;
-        case 1:
-            y += 1;
-      }
+		x = (posIntFantasma -y)/T.Columnas;
 
-      x = (posIntFantasma -y)/T.Columnas;
+		/*Verificamos que sea una posición valida*/
 
-      f ->setPosicion(x,y);
+		if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
+			f ->setPosicion(x,y);
+		}
+		
 
 
-      std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
-   }
-   
+		std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
+	}  
+	std::cout << std::endl <<"Paso el while" <<std::endl;
 }
 
 int main() {
@@ -139,8 +142,8 @@ int main() {
       for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
       {
          //moveFantasmaRaind(listaFantasmas[i], T, &pacman);
-            moveFantasma(listaFantasmas[i], T, &pacman);
-         
+            moveFantasma(listaFantasmas[i], T, &pacman,i);
+         	listaFantasmas[i] -> pinta();
          listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
       }
 
@@ -252,6 +255,7 @@ int main() {
                      color(BLANCO);
                      texto(23*TAM, 15*TAM,"Moriste");
                      espera(500);
+                     break;
                   }
             } 
       }
@@ -264,7 +268,7 @@ int main() {
          vcierra();
       }
 
-      espera(100);
+      espera(10);
       time++;
       Tecla = tecla();
       
