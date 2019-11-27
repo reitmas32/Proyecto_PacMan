@@ -113,10 +113,10 @@ int main() {
    {
       Pacman copia = pacman;
 
-      for (size_t i = 1; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
+      for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
       {
-         //moveFantasmaRaind(listaFantasmas[i], T, &pacman);
-            moveFantasma(listaFantasmas[i], T, &pacman);
+         moveFantasmaRaind(listaFantasmas[i], T, &pacman);
+            //moveFantasma(listaFantasmas[i], T, &pacman);
          
          listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
       }
