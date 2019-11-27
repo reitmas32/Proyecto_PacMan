@@ -2,6 +2,7 @@
 #ifndef TABLERO_HPP
 #define TABLERO_HPP
 
+/**!<Bibliotecas necesarias*/
 #include <vector>
 
 #include <iostream>
@@ -18,18 +19,6 @@
 
 #include <fstream>
 
-/**
- *@brief Función que convierte un int a string
- *
- *@param num Int que se convertira a string
- *
- *@return el int convertido a string
- */
-std::string intToString(int num){
-    std::stringstream sout;
-    sout << num;
-    return sout.str();
-}
 
 /**
  *@class Tablero
@@ -70,6 +59,25 @@ public:
 
     /**!<*/
     Graph* grafo;
+
+    /**
+     *@brief Función que convierte una string a un int
+     *
+     *@param num String que se convertira a int
+     *
+     *@return la string convertida a int
+     */
+    static size_t stringToInt(std::string num);
+
+    /**
+     *@brief Función que convierte un int a string
+     *
+     *@param num Int que se convertira a string
+     *
+     *@return el int convertido a string
+     */
+    static std::string intToString(int num);
+
 public:
     /**
      *@brief Método constructor del Tablero
@@ -121,6 +129,19 @@ public:
      *@brief
      */
     bool deadPacman(Pacman p, Fantasma* f);
+
+    /**
+     *@brief Función que mueve a lso fantasmas
+     *
+     *@param f Fantasma que se movera
+     *
+     *@param T Tablero de juego
+     *
+     *@param p Pacman del tablero
+     *
+     *@param color Color del Fantasma
+     */
+    static void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color);
 };
 
 Tablero::Tablero(/* args */)
@@ -271,6 +292,102 @@ void Tablero::repinta(){
     texto(23*TAM, 10*TAM, "Puntos:");
     texto(23*TAM,11*TAM, intToString(this->puntos));
     refresca();
+}
+
+
+std::string Tablero::intToString(int num){
+    std::stringstream sout;
+    sout << num;
+    return sout.str();
+}
+
+/**
+ *@brief Función que convierte una string a un int
+ *
+ *@param num String que se convertira a int
+ *
+ *@return la string convertida a int
+ */
+size_t Tablero::stringToInt(std::string num){
+   return stoi(num,nullptr,10);
+}
+
+
+
+void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
+
+    /*Varibales necesarias*/
+    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
+    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
+    size_t x =0,y=0;
+    size_t posIntFantasma =0;
+
+    /*Obtenemos el mapa del grafo*/
+    Map<std::string,Vertex*> *mapa = T.grafo -> get_map();
+
+    /*Buscamos al pacman*/
+
+    mapa -> search(posPacman);
+
+    /*obtenemos a la couple que contiene al pacman*/
+
+    Couple<std::string,Vertex*> *couplePacman = mapa -> getCursor();
+
+    /*Obtenemos al vertex de pacman*/
+
+    Vertex *pacman = couplePacman ->getValue();
+
+    /*Obtenemos a los vecinos de pacman*/
+
+    DLL<Vertex*>* vecinos = pacman -> get_neighbors();
+
+    /*Vertex temporal para recibir la información*/
+    Vertex *tmp;
+
+    /*Dependiendo el fantasma le daremos uan posición de pacman*/
+
+    switch(color){
+        case 0:
+            /*Le damos la posición exacta*/
+            break;
+        case 1: 
+            vecinos -> CursorFirst();
+            vecinos -> Peek(&tmp);
+            posPacman = tmp -> get_name();
+            break;
+        case 2:
+            vecinos -> CursorLast();
+            vecinos -> Peek(&tmp);
+            posPacman = tmp -> get_name();
+            break;
+    }
+
+    std::cout << std::endl <<"Paso el case" <<std::endl;
+    if(posFantasma != posPacman){
+        Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
+        T.grafo ->print();
+        while (s ->Len() > 5 && !s ->IsEmpty())
+        {
+            /*Convertimos a entero*/
+            posIntFantasma = stringToInt(s ->Pop());
+
+            /*Sacamos las coordenadas*/
+            y = posIntFantasma%T.Columnas;
+
+            x = (posIntFantasma -y)/T.Columnas;
+
+            /*Verificamos que sea una posición valida*/
+
+            if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
+                f ->setPosicion(x,y);
+            }
+            
+
+
+            std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
+        }  
+        std::cout << std::endl <<"Paso el while" <<std::endl;       
+    }
 }
 
 

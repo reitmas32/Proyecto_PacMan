@@ -3,179 +3,40 @@
 
 using namespace miniwin;
 
-/**
- *@brief Función que convierte una string a un int
- *
- *@param num String que se convertira a int
- *
- *@return la string convertida a int
- */
-size_t stringToInt(std::string num){
-   return stoi(num,nullptr,10);
-}
 
-
-
-/**
- *@brief Función que compara dos String
- *
- *@param val1 Primera string a comparar
- *
- *@param val2 Segunda string a comparar
- *
- *@return true si son iguales las cadenas, en caso contrario retorna false
- */
-
-bool cmpString(std::string val1, std::string val2){
-    return val1 == val2;
-}
-
-
-void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
-    Fantasma f_copia = *f;
-    if(f->getTime() > 15){
-        f->setTime(0);
-        switch (f->getDir())
-        {
-        case 1:
-            f->mueve_arriba();
-            break;
-        case 2:
-            f->mueve_abajo();
-            break;
-        case 3:
-            f->mueve_derecha();
-            break;
-        case 4:
-            f->mueve_izquierda();
-            break;
-        default:
-            break;
-        }
-        if(T.colision(*f)){
-            *f = f_copia;
-        }
-        f->setDir((rand() % 4) + 1);
-    }
-}
-
-/**
- *@brief Función que mueve a lso fantasmas
- *
- *@param f Fantasma que se movera
- *
- *@param T Tablero de juego
- *
- *@param p Pacman del tablero
- *
- *@param color Color del Fantasma
- */
-void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
-
-	/*Varibales necesarias*/
-	std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
-	std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
-	size_t x =0,y=0;
-	size_t posIntFantasma =0;
-
-	/*Obtenemos el mapa del grafo*/
-	Map<std::string,Vertex*> *mapa = T.grafo -> get_map();
-
-	/*Buscamos al pacman*/
-
-	mapa -> search(posPacman);
-
-	/*obtenemos a la couple que contiene al pacman*/
-
-	Couple<std::string,Vertex*> *couplePacman = mapa -> getCursor();
-
-	/*Obtenemos al vertex de pacman*/
-
-	Vertex *pacman = couplePacman ->getValue();
-
-	/*Obtenemos a los vecinos de pacman*/
-
-	DLL<Vertex*>* vecinos = pacman -> get_neighbors();
-
-	/*Vertex temporal para recibir la información*/
-	Vertex *tmp;
-
-	/*Dependiendo el fantasma le daremos uan posición de pacman*/
-
-	switch(color){
-		case 0:
-			/*Le damos la posición exacta*/
-			break;
-		case 1: 
-			vecinos -> CursorFirst();
-			vecinos -> Peek(&tmp);
-			posPacman = tmp -> get_name();
-			break;
-		case 2:
-			vecinos -> CursorLast();
-			vecinos -> Peek(&tmp);
-			posPacman = tmp -> get_name();
-			break;
-	}
-
-	std::cout << std::endl <<"Paso el case" <<std::endl;
-	if(posFantasma != posPacman){
-		Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
-		T.grafo ->print();
-		while (s ->Len() > 5 && !s ->IsEmpty())
-		{
-			/*Convertimos a entero*/
-			posIntFantasma = stringToInt(s ->Pop());
-
-			/*Sacamos las coordenadas*/
-			y = posIntFantasma%T.Columnas;
-
-			x = (posIntFantasma -y)/T.Columnas;
-
-			/*Verificamos que sea una posición valida*/
-
-			if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
-				f ->setPosicion(x,y);
-			}
-			
-
-
-			std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
-		}  
-		std::cout << std::endl <<"Paso el while" <<std::endl;		
-	}
-}
 
 int main() {
    vredimensiona(400, 300);
    srand(time(NULL));
    int Tecla = tecla();
-   //Tablero
+   /*Tablero*/
    Tablero T = Tablero(MAPAS::LevelOne, Colors::Gray, Colors::Black);
    T.creaMundo();
    T.creaGrafo();
    T.pinta();
 
-   //Pacman
+   /*Creación de los fantasmas y pacman*/
+   
+   /*Pacman*/
    Pacman pacman = Pacman(MAPAS::LevelOneWorld::POS_PACMAN_ORIG_X, 
                      MAPAS::LevelOneWorld::POS_PACMAN_ORIG_Y,
                      Colors::Yellow,Colors::Black);
 
    pacman.pinta_arri();
 
-    //Fantasma Rojo
+    /*Fantasma Rojo*/
     Fantasma f_rojo = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
                                MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
                                Colors::Red, Colors::Gray);
     f_rojo.pinta();
 
-    //Fantasma Verde
+    /*Fantasma Verde*/
     Fantasma f_verde = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
                                 MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
                                 Colors::Green, Colors::Gray);
     f_verde.pinta();
 
-    //Fantasma Naranja
+    /*Fantasma Naranja*/
     Fantasma f_magenta = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
                                   MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
                                   Colors::Magenta, Colors::Gray);
@@ -190,17 +51,12 @@ int main() {
 
    int dir = 0;
 
-   //DLL<Fantasma*> listaFantasmas = DLL<Fantasma*>();
    Fantasma* listaFantasmas[MAPAS::LevelOneWorld::NUM_FANTASMAS]; 
 
    listaFantasmas[0] = &f_rojo;
    listaFantasmas[1] = &f_verde;
    listaFantasmas[2] = &f_magenta;
-/*
-   listaFantasmas.InsertBack(&f_rojo);
-   listaFantasmas.InsertBack(&f_verde);
-   listaFantasmas.InsertBack(&f_magenta);
-*/
+
    Pacman p_origen = pacman;
 
    for(size_t i = 0; i < T.vidas ; i++){
@@ -214,10 +70,10 @@ int main() {
 
       for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
       {
-         //moveFantasmaRaind(listaFantasmas[i], T, &pacman);
-            moveFantasma(listaFantasmas[i], T, &pacman,i);
+
+            Tablero::moveFantasma(listaFantasmas[i], T, &pacman,i);
          	listaFantasmas[i] -> pinta();
-         listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
+        	listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
       }
 
 
@@ -346,8 +202,6 @@ int main() {
       Tecla = tecla();
       
    }
-
-   std::cout<<stringToInt("20");
    
    vcierra();
 
