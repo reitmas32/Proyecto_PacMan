@@ -38,11 +38,34 @@ void moveFantasmaRaind(Fantasma* f,Tablero T,Pacman* p){
 void moveFantasma(Fantasma* f,Tablero T,Pacman* p){
    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
+   size_t x =0,y=0;
+   size_t posIntFantasma =0;
+
    
    Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
-   while (not s->IsEmpty())
+
+   while (s ->Len() > 3)
    {
-      std::cout<<s->Pop()<<std::endl;
+      /*Convertimso a entero*/
+      posIntFantasma = stringToInt(s ->Pop());
+
+      /*Sacamos las coordenadas*/
+      y = posIntFantasma%T.Columnas;
+
+      switch(y){
+        case 0:
+            y +=2;
+            break;
+        case 1:
+            y += 1;
+      }
+
+      x = (posIntFantasma -y)/T.Columnas;
+
+      f ->setPosicion(x,y);
+
+
+      std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
    }
    
 }
