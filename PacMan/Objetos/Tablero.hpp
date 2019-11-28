@@ -227,7 +227,7 @@ void Tablero::creaGrafo(){
                 grafo -> add_vertex(new Vertex(intToString(i+j*this -> Columnas)));
         }
     }
-
+#if 0
     /*Los conectamos horizontalmente*/
    for(size_t i=0; i<this -> Filas; i++){
         for(size_t j =0; j<this -> Columnas; j++){
@@ -253,6 +253,65 @@ void Tablero::creaGrafo(){
             }
        }
     }
+#endif
+
+    /*Los conectamos horizontalmente*/
+   for(size_t i=0; i<this -> Filas; i++){
+        for(size_t j =0; j<this -> Columnas; j++){
+
+            if(this->mapa[i][j] == 0 || this->mapa[i][j] == 3){
+                if(this->mapa[i][j-1] == 0 || this->mapa[i][j-1] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString(i+(j-1)*this->Columnas));
+                }
+                if(this->mapa[i][j+1] == 0 || this->mapa[i][j+1] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString(i+(j+1)*this->Columnas));
+                }
+
+                if(this->mapa[i-1][j] == 0 || this->mapa[i-1][j] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i-1)+j*this->Columnas));
+                }
+                if(this->mapa[i+1][j] == 0 || this->mapa[i+1][j] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i+1)+j*this->Columnas));
+                }
+            }
+/*
+            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
+                grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
+            }
+
+            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
+                grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
+            }
+*/
+        }
+    }
+
+    /*Los conectamos verticalmente*/
+#if 0
+    for(size_t i=0; i<this -> Filas; i++){
+        for(size_t j =0; j<this -> Columnas; j++){
+
+            if(this->mapa[i][j] == 0 || this->mapa[i][j] == 3){
+                if(this->mapa[i-1][j] == 0 || this->mapa[i-1][j] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i-1)+j*this->Columnas));
+                }
+                if(this->mapa[i+1][j] == 0 || this->mapa[i+1][j] == 3){
+                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i+1)+j*this->Columnas));
+                }
+            }      
+
+/*
+            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
+                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
+            }
+
+            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
+                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
+            }
+*/
+       }
+    }
+#endif
 }
 
 void Tablero::pinta(){
@@ -362,13 +421,17 @@ void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
             break;
     }
 
-    std::cout << std::endl <<"Paso el case" <<std::endl;
+    //std::cout << std::endl <<"Paso el case" <<std::endl;
     if(posFantasma != posPacman){
         Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
-        T.grafo ->print();
-        while (s ->Len() > 5 && !s ->IsEmpty())
-        {
+
+        //std::cout<<posFantasma<<" "<<posPacman<<std::endl;
+
+        //T.grafo ->print();
+        //while (s ->Len() > 5 && !s ->IsEmpty())
+        //{
             /*Convertimos a entero*/
+            s->Pop();
             posIntFantasma = stringToInt(s ->Pop());
 
             /*Sacamos las coordenadas*/
@@ -376,17 +439,15 @@ void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
 
             x = (posIntFantasma -y)/T.Columnas;
 
-            /*Verificamos que sea una posición valida*/
-
+            /*Verificamos que sea una posición valida*/      
             if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
                 f ->setPosicion(x,y);
             }
             
 
-
-            std::cout<< posIntFantasma << "x: " << x << " y: " << y <<std::endl;
-        }  
-        std::cout << std::endl <<"Paso el while" <<std::endl;       
+            //std::cout<< posIntFantasma << " -> x: " << x << " y: " << y <<std::endl;
+        //}  
+        //std::cout << std::endl <<"Paso el while" <<std::endl;       
     }
 }
 

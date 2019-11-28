@@ -23,8 +23,12 @@ namespace MAPAS
         const size_t NUM_VIDAS = 1;
         const int POS_PACMAN_ORIG_X = 9;
         const int POS_PACMAN_ORIG_Y = 18;
-        const int POS_FANTASMA_ORIG_X = 9;
-        const int POS_FANTASMA_ORIG_Y = 10;
+        const int POS_FANTASMA_ROJO_ORIG_X = 9;
+        const int POS_FANTASMA_ROJO_ORIG_Y = 10;
+        const int POS_FANTASMA_VERDE_ORIG_X = 6;
+        const int POS_FANTASMA_VERDE_ORIG_Y = 10;
+        const int POS_FANTASMA_MAGENTA_ORIG_X = 12;
+        const int POS_FANTASMA_MAGENTA_ORIG_Y = 10;
         const int MAX_PUNTAJE = 182;
 
         uint8_t Mapa[FILAS][COLUMNAS] = {

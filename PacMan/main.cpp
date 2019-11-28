@@ -25,20 +25,20 @@ int main() {
    pacman.pinta_arri();
 
     /*Fantasma Rojo*/
-    Fantasma f_rojo = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
-                               MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
+    Fantasma f_rojo = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ROJO_ORIG_X, 
+                               MAPAS::LevelOneWorld::POS_FANTASMA_ROJO_ORIG_Y,
                                Colors::Red, Colors::Gray);
     f_rojo.pinta();
 
     /*Fantasma Verde*/
-    Fantasma f_verde = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
-                                MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
+    Fantasma f_verde = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_VERDE_ORIG_X, 
+                                MAPAS::LevelOneWorld::POS_FANTASMA_VERDE_ORIG_Y,
                                 Colors::Green, Colors::Gray);
     f_verde.pinta();
 
     /*Fantasma Naranja*/
-    Fantasma f_magenta = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_X, 
-                                  MAPAS::LevelOneWorld::POS_FANTASMA_ORIG_Y,
+    Fantasma f_magenta = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_MAGENTA_ORIG_X, 
+                                  MAPAS::LevelOneWorld::POS_FANTASMA_MAGENTA_ORIG_Y,
                                   Colors::Magenta, Colors::Gray);
     f_magenta.pinta();
 
@@ -68,15 +68,6 @@ int main() {
    {
       Pacman copia = pacman;
 
-      for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
-      {
-
-            Tablero::moveFantasma(listaFantasmas[i], T, &pacman,i);
-         	listaFantasmas[i] -> pinta();
-        	listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
-      }
-
-
       if(Tecla != ARRIBA || Tecla != ABAJO || Tecla != DERECHA || Tecla != IZQUIERDA || dir != 0){
          if(time > 40){
                time = 0;
@@ -97,6 +88,14 @@ int main() {
                default:
                   break;
             }
+
+            for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
+            {
+                  Tablero::moveFantasma(listaFantasmas[i], T, &pacman,i);
+                  listaFantasmas[i] -> pinta();
+               listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
+            }
+
          }
       }
 
@@ -167,7 +166,7 @@ int main() {
                T.puntos++;
             }
          }
-
+         //std::cout<<pacman.getPosicion().x<<", "<<pacman.getPosicion().y<<std::endl;
       }
 
       for(size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++){
@@ -183,6 +182,7 @@ int main() {
                      T.repinta();
                      color(BLANCO);
                      texto(23*TAM, 15*TAM,"Moriste");
+                     T.creaGrafo();
                      espera(500);
                      break;
                   }
@@ -196,7 +196,6 @@ int main() {
          espera(1500);
          vcierra();
       }
-
       espera(10);
       time++;
       Tecla = tecla();
