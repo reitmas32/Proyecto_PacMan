@@ -33,31 +33,31 @@ public:
     /**!<*/
     int posFantasma;
 
-    /**!<*/
+    /**!<Columnas del tablero*/
     size_t Columnas;
 
-    /**!<*/
+    /**!<Filas del tablero*/
     size_t Filas;
 
-    /**!<*/
+    /**!<Matriz que contiene el mapa del tablero*/
     uint8_t** mapa;
 
-    /**!<*/
+    /**!<Matriz que contiene al mapa para pintarlo en pantallas*/
     Cuadro** tablero;
 
-    /**!<*/
+    /**!<Numero de vidas de pacman*/
     size_t vidas;
 
-    /**!<*/
+    /**!<Color de la pared del tablero*/
     int ColorPared[3];
 
-    /**!<*/
+    /**!<Color del camino del tablero*/
     int ColorCamino[3];
 
-    /**!<*/
+    /**!<Numero de puntos obtenidos*/
     size_t puntos;
 
-    /**!<*/
+    /**!<Camino por el cual pueden andar los fantasmas y pacman*/
     Graph* grafo;
 
     /**
@@ -96,7 +96,7 @@ public:
     ~Tablero();
 
     /**
-     *@brief
+     *@brief Método que crea el mundo en cual se jugara
      */
     void creaMundo();
 
@@ -106,22 +106,28 @@ public:
     void creaGrafo();
 
     /**
-     *@brief
+     *@brief Método que pinta al tablero
      */
     void pinta();
 
     /**
-     *@brief
+     *@brief Método que checa las colisiones del juego
+     *
+     *@param Figura figura a la cual se checara si hay colisión
      */
     bool colision(Figura figura);
 
     /**
-     *@brief
+     *@brief Método que repinta el tablero
      */
     void repinta();
 
     /**
-     *@brief
+     *@brief Método que ve si el pacman murio
+     *
+     *@param p Pacman del tablero
+     *
+     *@param f Fantasma que puede comer a pacman
      */
     bool deadPacman(Pacman p, Fantasma* f);
 

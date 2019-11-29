@@ -11,7 +11,7 @@ const int RADIO = TAM / 2;
 
 /**
  *@class Pacman
- *brief Representa la Pacman del juego
+ *brief Representa el Pacman del juego
  */
 class Pacman : public Figura
 {
@@ -24,13 +24,13 @@ public:
     /**
      *@brief Metodo constructor de Pacman
      *
-     *@param x 
+     *@param x Posción en x de pacman
      *
-     *@param y
+     *@param y Posición en y de pacman
      *
-     *@param colorSolido[]
+     *@param colorSolido[] Color solido del pacman
      *
-     *@param colorDecora[]
+     *@param colorDecora[] Colro de decoración del pacman
      */
     Pacman(int x, int y, int colorSolido[], int colorDecora[]);
 
@@ -40,25 +40,28 @@ public:
     ~Pacman();
 
     /**
-     *@brief
+     *@brief Método que pinta el pacman viendo hacia la derecha
      */
     void pinta_der();
 
     /**
-     *@brief
+     *@brief Método que pinta al pacman viendo hacia la izquierda
      */
     void pinta_izq();
 
     /**
-     *@brief
+     *@brief Método que pinta al pacman viendo hacia arriba
      */
     void pinta_arri();
 
     /**
-     *@brief
+     *@brief Método que pinta al pacman viendo hacia abajo
      */
     void pinta_abajo();
 
+    /**
+     *@brief Método que pinta un pacman grande
+     */
     static void pintaBigPacman();
 };
 

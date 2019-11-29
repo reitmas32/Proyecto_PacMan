@@ -10,8 +10,6 @@
  *@brief Representa la comida de Pacman
  */
 class Comida : public Figura{
-private:
-    /* data */
 public:
     /**
      *@brief Método constructor de Comida
@@ -21,13 +19,13 @@ public:
     /**
      *@brief Método constructor de Comida
      *
-     *@param x
+     *@param x Posición en x de la comida
      *
-     *@param y
+     *@param y Posición en y de la comida
      *
-     *@param colorSolido[]
+     *@param colorSolido[] Color solido de la comida
      *
-     *@param colorDecora[]
+     *@param colorDecora[] Color de decoración de la comida
      */
     Comida(int x, int y, int colorSolido[], int colorDecora[]);
 

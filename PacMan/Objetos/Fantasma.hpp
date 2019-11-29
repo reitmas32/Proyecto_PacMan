@@ -45,36 +45,36 @@ public:
     ~Fantasma();
 
     /** 
-     *@brief
+     *@brief Método que pinta al fantasma
      */
     void pinta();
 
     /** 
-     *@brief
+     *@brief Método que pinta al fantasma de azul
      */
     void pintaAzul();
 
     /**
-     *@brief
+     *@brief  Método que nos regresa el valor de dir
      */
     int getDir(){return dir;}
 
     /** 
-     *@brief
+     *@brief Método que nos regresa el valor de time
      */
     int getTime(){return time;}
 
     /** 
-     *@brief
+     *@brief Método que define el valor de dir
      *
-     *@param dir
+     *@param dir Nuevo valor de dir
      */
     void setDir(int dir){this->dir = dir;}
 
     /**
-     *@brief
+     *@brief Método que define el valor de time
      *
-     *@param
+     *@param time Nuevo valor de time
      */
     void setTime(int time){this->time = time;}
 
