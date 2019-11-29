@@ -91,7 +91,7 @@ int main() {
 
             for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
             {
-                  Tablero::moveFantasma(listaFantasmas[i], T, &pacman,i);
+                  Tablero::moveFantasma(listaFantasmas[i], &T, &pacman,i);
                   listaFantasmas[i] -> pinta();
                listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);
             }

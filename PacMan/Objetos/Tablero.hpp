@@ -81,11 +81,6 @@ public:
 public:
     /**
      *@brief Método constructor del Tablero
-     */
-    Tablero();
-
-    /**
-     *@brief Método constructor del Tablero
      *
      *@param mapa
      *
@@ -141,13 +136,8 @@ public:
      *
      *@param color Color del Fantasma
      */
-    static void moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color);
+    static void moveFantasma(Fantasma* f,Tablero* T,Pacman* p, int color);
 };
-
-Tablero::Tablero(/* args */)
-{
-
-}
 
 Tablero::Tablero(int mapa, int ColorPared[], int ColorCamino[]){
     
@@ -160,33 +150,61 @@ Tablero::Tablero(int mapa, int ColorPared[], int ColorCamino[]){
     switch (mapa)
     {
     case MAPAS::LevelOne:
+        /*Definimos las dimensiones*/
         this->Columnas = MAPAS::LevelOneWorld::COLUMNAS;
         this->Filas = MAPAS::LevelOneWorld::FILAS;
-        this->mapa = (uint8_t**)calloc(this->Filas, sizeof(uint8_t*));
+
+        /*Creamos el contenedor del mapa*/
+        this->mapa = new uint8_t*[Filas];
+
         for( size_t i = 0; i < this->Filas; i++){
-            this->mapa[i] = (uint8_t*)calloc(this->Columnas, sizeof(uint8_t));
+            this->mapa[i] = new uint8_t[Columnas];
         }
+
+        /*Cargamos el mapa*/
         for(size_t i = 0; i < this->Filas; i++){
             for( size_t j = 0; j < this->Columnas; j++){
                 this->mapa[i][j] = MAPAS::LevelOneWorld::Mapa[i][j];
             }
         }
-        this->tablero = (Cuadro**)calloc(this->Filas, sizeof(Cuadro*));
+
+        /*Creamos el tablero*/
+        this->tablero = new Cuadro*[Filas]; 
         for( size_t i = 0; i < this->Filas; i++){
-            this->tablero[i] = (Cuadro*)calloc(this->Columnas, sizeof(Cuadro));
+            this->tablero[i] = new Cuadro[Columnas]; 
         }
         break;
     
     default:
         break;
     }
+    /*Definimos las vidas y puntos*/
     this->vidas = 3;
     this->puntos = 0;
+
+    /*Creamos el grafo*/
+    this -> grafo = new Graph();
 }
 
 Tablero::~Tablero()
 {
-    //this->LevelOneGraph.~Graph();
+    /*Destruimos el mapa*/
+    for(size_t i=0; i<this -> Filas; i++){
+        delete this -> mapa[i];
+    }
+    delete[] mapa;
+
+    /*Destruimos el tablero*/
+
+    for(size_t i=0; i<this -> Filas; i++){
+        this -> tablero[i] -> ~Cuadro();
+    }
+
+    delete[] tablero;
+
+    /*Eliminamos el grafo*/
+    delete grafo;
+
 }
 
 void Tablero::creaMundo(){
@@ -219,7 +237,7 @@ void Tablero::creaMundo(){
 }
 
 void Tablero::creaGrafo(){
-    this -> grafo = new Graph();
+
     /*Creamos los vertices*/
     for(size_t i = 0; i<this ->Filas; i++){
         for(size_t j=0; j<this ->Columnas; j++){
@@ -254,7 +272,7 @@ void Tablero::creaGrafo(){
        }
     }
 #endif
-
+#if 1
     /*Los conectamos horizontalmente*/
    for(size_t i=0; i<this -> Filas; i++){
         for(size_t j =0; j<this -> Columnas; j++){
@@ -311,6 +329,7 @@ void Tablero::creaGrafo(){
 */
        }
     }
+#endif
 #endif
 }
 
@@ -373,16 +392,16 @@ size_t Tablero::stringToInt(std::string num){
 
 
 
-void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
+void Tablero::moveFantasma(Fantasma* f,Tablero* T,Pacman* p, int color){
 
     /*Varibales necesarias*/
-    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T.Columnas);
-    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T.Columnas);
+    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T -> Columnas);
+    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T -> Columnas);
     size_t x =0,y=0;
     size_t posIntFantasma =0;
 
     /*Obtenemos el mapa del grafo*/
-    Map<std::string,Vertex*> *mapa = T.grafo -> get_map();
+    Map<std::string,Vertex*> *mapa = T -> grafo -> get_map();
 
     /*Buscamos al pacman*/
 
@@ -423,7 +442,7 @@ void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
 
     //std::cout << std::endl <<"Paso el case" <<std::endl;
     if(posFantasma != posPacman){
-        Stack<std::string> *s = T.grafo->goTo(posFantasma, posPacman);
+        Stack<std::string> *s = T -> grafo->goTo(posFantasma, posPacman);
 
         //std::cout<<posFantasma<<" "<<posPacman<<std::endl;
 
@@ -435,12 +454,12 @@ void Tablero::moveFantasma(Fantasma* f,Tablero T,Pacman* p, int color){
             posIntFantasma = stringToInt(s ->Pop());
 
             /*Sacamos las coordenadas*/
-            y = posIntFantasma%T.Columnas;
+            y = posIntFantasma%T -> Columnas;
 
-            x = (posIntFantasma -y)/T.Columnas;
+            x = (posIntFantasma -y)/T -> Columnas;
 
             /*Verificamos que sea una posición valida*/      
-            if(T.mapa[y][x] != 2 && T.mapa[y][x] != 1){
+            if(T -> mapa[y][x] != 2 && T -> mapa[y][x] != 1){
                 f ->setPosicion(x,y);
             }
             
