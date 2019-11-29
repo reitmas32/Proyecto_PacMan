@@ -5,10 +5,8 @@
 /**!<Bibliotecas necesarias*/
 #include <iostream>
 #include <string>
-#include <list>
 #include <cstring>
 #include "Recursos/MapTemplate/Map.hpp"
-#include <vector>
 #include "Recursos/Vertex/Vertex.hpp"
 #include "Recursos/Couple/Couple.hpp"
 #include "Recursos/DLLTemplate/DLL.hpp"
