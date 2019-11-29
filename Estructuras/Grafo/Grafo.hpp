@@ -10,7 +10,6 @@
 #include "Recursos/MapTemplate/Map.hpp"
 #include <vector>
 #include "Recursos/Vertex/Vertex.hpp"
-#include "Recursos/Administrador/Administrador.hpp"
 #include "Recursos/Couple/Couple.hpp"
 #include "Recursos/DLLTemplate/DLL.hpp"
 #include "Recursos/StackTemplate/Stack.hpp"
@@ -25,9 +24,6 @@ private:
 
 	/**!<Lista de vertex en el grafo*/
 	Map<std::string,Vertex*> *vertices;
-
-	/**!<*/
-	Administrador admon;
 
 	/**
 	 *@brief Método que imprime el value de una couple
@@ -140,16 +136,6 @@ public:
 	 *@return true si se conectaron los vertex, en caso contrario retorna false
 	 */
 	bool add_edge_weighted( std::string edge1, std::string edge2, int weigth);
-
-	/**
-	 *@brief
-	 */
-	void create_Graph();
-
-	/**
-	 *@brief
-	 */
-	void cargar_Plano();
 
 	/**
 	 *@brief Método que indica el camino a seguir de un vertex a otro
