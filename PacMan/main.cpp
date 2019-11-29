@@ -1,3 +1,4 @@
+/**!<Bibliotecas necesarias*/
 #include "Objetos/Tablero.hpp"
 #include "Objetos/Comida.hpp"
 

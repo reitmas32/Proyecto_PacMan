@@ -114,6 +114,8 @@ public:
      *@brief Método que checa las colisiones del juego
      *
      *@param Figura figura a la cual se checara si hay colisión
+     *
+     *@return True si hay una colisción, en caso contrario retorna false
      */
     bool colision(Figura figura);
 
@@ -123,11 +125,13 @@ public:
     void repinta();
 
     /**
-     *@brief Método que ve si el pacman murio
+     *@brief Método que ve si el pacman murió
      *
      *@param p Pacman del tablero
      *
      *@param f Fantasma que puede comer a pacman
+     *
+     *@return True si el pacman murió, en caso contrario retorna false
      */
     bool deadPacman(Pacman p, Fantasma* f);
 

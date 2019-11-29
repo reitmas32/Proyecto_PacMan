@@ -56,11 +56,15 @@ public:
 
     /**
      *@brief  Método que nos regresa el valor de dir
+     *
+     *@return Valor de dir
      */
     int getDir(){return dir;}
 
     /** 
      *@brief Método que nos regresa el valor de time
+     *
+     *@return Valor de time
      */
     int getTime(){return time;}
 
