@@ -1,5 +1,5 @@
-#ifndef COLORS_HPP
-#define COLORS_HPP
+#ifndef COLOR_HPP
+#define COLOR_HPP
 
 /**
  * Se utilizara la estructura vector para almacenar los valores de los colores

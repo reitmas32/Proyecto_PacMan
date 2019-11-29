@@ -5,17 +5,7 @@
 /**!<Bibliotecas necesarias*/
 #include <sstream>
 
-#include "../Graphics_Engine/Cuadro.hpp"
-
 #include "Figura.hpp"
-
-#include "../Graphics_Engine/Mapas.hpp"
-
-#include "../../Estructuras/Grafo/Grafo.hpp"
-
-#include "../../Estructuras/DLLTemplate/DLL.hpp"
-
-#include "../../Estructuras/StackTemplate/Stack.hpp"
 
 /**
  *@class Fantasma
@@ -30,8 +20,6 @@ private:
     /**!<*/
     int time;
 public:
-    /**!<*/
-    Stack<std::string> *roadToPacman;
 
     /**
      *@brief Método constructor del Fantasma
@@ -61,6 +49,11 @@ public:
      */
     void pinta();
 
+    /** 
+     *@brief
+     */
+    void pintaAzul();
+
     /**
      *@brief
      */
@@ -84,6 +77,8 @@ public:
      *@param
      */
     void setTime(int time){this->time = time;}
+
+    static void pintaBigFantasma();
 };
 
 Fantasma::Fantasma(/* args */)
@@ -105,46 +100,101 @@ Fantasma::~Fantasma()
 
 void Fantasma::pinta(){
 
-    color_rgb(getColorSolido()[0],
+    miniwin::color_rgb(getColorSolido()[0],
               getColorSolido()[1],
               getColorSolido()[2]
     );
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 3,
-                        MARGEN + 1 + this->getPosicion().y * TAM,
-                        MARGEN + this->getPosicion().x * TAM + TAM - 3,
-                        MARGEN + this->getPosicion().y * TAM + TAM);
 
-    color_rgb(getColorDecora()[0],
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 9,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 7,
+                                 8);
+
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 5,
+                                 MARGEN + this->getPosicion().x * TAM + TAM - 2,
+                                 MARGEN + this->getPosicion().y * TAM + TAM - 3);
+
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 9,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 4,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 14,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+
+    miniwin::color_rgb(getColorDecora()[0],
               getColorDecora()[1],
               getColorDecora()[2]
     );
 
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 4,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 4,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 5,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 1);
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 5,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().x * TAM + 7,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 4);
 
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 7,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 4,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 8,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 1);
-
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 10,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 4,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 11,
-                        MARGEN + 1 + this->getPosicion().y * TAM + TAM - 1);
-
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 5,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 2,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 7,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 4);
-
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 8,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 2,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 10,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 4);
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 10,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().x * TAM + 12,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 4);
+    
 
 }
 
+void Fantasma::pintaAzul(){
+
+    miniwin::color(miniwin::AZUL);
+
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 9,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 7,
+                                 8);
+
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 5,
+                                 MARGEN + this->getPosicion().x * TAM + TAM - 2,
+                                 MARGEN + this->getPosicion().y * TAM + TAM - 3);
+
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 9,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 4,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+    miniwin::circulo_lleno(      MARGEN + 1 + this->getPosicion().x * TAM + 14,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 16,
+                                 2);
+
+    miniwin::color_rgb(getColorDecora()[0],
+              getColorDecora()[1],
+              getColorDecora()[2]
+    );
+
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 5,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().x * TAM + 7,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 4);
+
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 10,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 2,
+                                 MARGEN + 1 + this->getPosicion().x * TAM + 12,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 4);
+    
+
+}
+
+void Fantasma::pintaBigFantasma(){
+    
+    miniwin::color(miniwin::AZUL);
+    miniwin::circulo_lleno(300,130,30);
+    miniwin::rectangulo_lleno(270,130,330,180);
+    miniwin::circulo_lleno(280,180,10);
+    miniwin::circulo_lleno(300,180,10);
+    miniwin::circulo_lleno(320,180,10);
+    
+    miniwin::color(miniwin::BLANCO);
+    miniwin::circulo_lleno(290,120,5);
+    miniwin::circulo_lleno(310,120,5);
+}
 
 #endif  //GHOST_HPP

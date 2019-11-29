@@ -18,18 +18,22 @@ namespace MAPAS
 
         const size_t COLUMNAS = 19;
         const size_t FILAS = 23;
-        const size_t NUM_FANTASMAS = 3;
+        const size_t NUM_FANTASMAS = 5;
         const size_t NUM_PILDORAS = 4;
         const size_t NUM_VIDAS = 1;
         const int POS_PACMAN_ORIG_X = 9;
         const int POS_PACMAN_ORIG_Y = 18;
         const int POS_FANTASMA_ROJO_ORIG_X = 9;
-        const int POS_FANTASMA_ROJO_ORIG_Y = 10;
+        const int POS_FANTASMA_ROJO_ORIG_Y = 8;
         const int POS_FANTASMA_VERDE_ORIG_X = 6;
         const int POS_FANTASMA_VERDE_ORIG_Y = 10;
         const int POS_FANTASMA_MAGENTA_ORIG_X = 12;
         const int POS_FANTASMA_MAGENTA_ORIG_Y = 10;
-        const int MAX_PUNTAJE = 182;
+        const int POS_FANTASMA_CYAN_ORIG_X = 14;
+        const int POS_FANTASMA_CYAN_ORIG_Y = 16;
+        const int POS_FANTASMA_WHITE_ORIG_X = 7;
+        const int POS_FANTASMA_WHITE_ORIG_Y = 16;
+        const int MAX_PUNTAJE = 185;
 
         uint8_t Mapa[FILAS][COLUMNAS] = {
             {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
@@ -42,8 +46,8 @@ namespace MAPAS
             {2,1,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,1,2},
             {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
             {2,1,0,1,1,0,1,0,1,0,1,0,1,3,1,1,0,1,2},
-            {2,1,0,1,1,0,0,0,1,0,1,0,0,0,1,1,0,1,2},
-            {2,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,2},
+            {2,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,1,2},
+            {2,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,2},
             {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
             {2,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,2},
             {2,1,0,1,1,0,1,0,0,1,0,0,1,0,1,1,0,1,2},

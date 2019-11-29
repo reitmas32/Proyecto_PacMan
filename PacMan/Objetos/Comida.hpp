@@ -63,25 +63,24 @@ Comida::~Comida()
 }
 
 void Comida::pinta(){
-    color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
+    miniwin::color_rgb(getColorSolido()[0],
+                       getColorSolido()[1],
+                       getColorSolido()[2]
     );
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 6,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 6,
-                        MARGEN + 1 + this->getPosicion().x * TAM + 8,
-                        MARGEN + 1 + this->getPosicion().y * TAM + 8);
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 6,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 6,
+                                 MARGEN + 1 + this->getPosicion().x * TAM + 8,
+                                 MARGEN + 1 + this->getPosicion().y * TAM + 8);
 }
 
 void Comida::pintaGrande(){
-    color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
+    miniwin::color_rgb(getColorSolido()[0],
+                       getColorSolido()[1],
+                       getColorSolido()[2]
     );
 
-    circulo_lleno(  MARGEN + 1 + this->getPosicion().x * TAM + 7,
-                    MARGEN + 1 + this->getPosicion().y * TAM + 6,
-                    3);
+    miniwin::circulo_lleno(  MARGEN + 1 + this->getPosicion().x * TAM + 7,
+                            MARGEN + 1 + this->getPosicion().y * TAM + 6,3);
 }
 
 #endif  //COMIDA_HPP

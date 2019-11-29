@@ -21,8 +21,6 @@
  **/
 #include "Colors.hpp"
 
-using namespace miniwin;
-
 /**
  * Es el margen del Display
  **/
@@ -87,6 +85,7 @@ public:
     void pintaSolido();
 };
 
+#if 1
 Cuadro::Cuadro(/* args */)
 {
 }
@@ -101,20 +100,20 @@ Cuadro::Cuadro(int x, int y, int colorSolido[], int colorDecora[])
 
 void Cuadro::pinta(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    color_rgb(getColorSolido()[0],
+    miniwin::color_rgb(getColorSolido()[0],
               getColorSolido()[1],
               getColorSolido()[2]
     );
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,
                         MARGEN + this->getPosicion().y * TAM + TAM);
     //Se cambia el color para pintar en el color Decora del cuadro
-    color_rgb(getColorDecora()[0],
+    miniwin::color_rgb(getColorDecora()[0],
               getColorDecora()[1],
               getColorDecora()[2]
     );
-    rectangulo( MARGEN + 3 + this->getPosicion().x * TAM,
+    miniwin::rectangulo( MARGEN + 3 + this->getPosicion().x * TAM,
                 MARGEN + 3 + this->getPosicion().y * TAM,
                 MARGEN + this->getPosicion().x * TAM + TAM - 3,
                 MARGEN + this->getPosicion().y * TAM + TAM - 3);
@@ -122,11 +121,11 @@ void Cuadro::pinta(){
 
 void Cuadro::pintaSolido(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    color_rgb(getColorSolido()[0],
+    miniwin::color_rgb(getColorSolido()[0],
               getColorSolido()[1],
               getColorSolido()[2]
     );
-    rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
+    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,
                         MARGEN + this->getPosicion().y * TAM + TAM);
@@ -135,5 +134,5 @@ void Cuadro::pintaSolido(){
 Cuadro::~Cuadro()
 {
 }
-
+#endif
 #endif  //CUADRO_HPP

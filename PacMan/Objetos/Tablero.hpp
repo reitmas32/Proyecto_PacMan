@@ -137,6 +137,19 @@ public:
      *@param color Color del Fantasma
      */
     static void moveFantasma(Fantasma* f,Tablero* T,Pacman* p, int color);
+
+    /**
+     *@brief Función que mueve a lso fantasmas lejs de pacman
+     *
+     *@param f Fantasma que se movera
+     *
+     *@param T Tablero de juego
+     *
+     *@param p Pacman del tablero
+     *
+     *@param color Color del Fantasma
+     */
+    static void huyeFantasma(Fantasma* f,Tablero* T,Pacman* p, int color);
 };
 
 Tablero::Tablero(int mapa, int ColorPared[], int ColorCamino[]){
@@ -245,34 +258,6 @@ void Tablero::creaGrafo(){
                 grafo -> add_vertex(new Vertex(intToString(i+j*this -> Columnas)));
         }
     }
-#if 0
-    /*Los conectamos horizontalmente*/
-   for(size_t i=0; i<this -> Filas; i++){
-        for(size_t j =0; j<this -> Columnas; j++){
-            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
-                grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
-            }
-
-            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
-                grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-        }
-    }
-
-    /*Los conectamos verticalmente*/
-    for(size_t i=0; i<this -> Filas; i++){
-        for(size_t j =0; j<this -> Columnas; j++){
-            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
-                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-
-            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
-                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-       }
-    }
-#endif
-#if 1
     /*Los conectamos horizontalmente*/
    for(size_t i=0; i<this -> Filas; i++){
         for(size_t j =0; j<this -> Columnas; j++){
@@ -292,49 +277,12 @@ void Tablero::creaGrafo(){
                     this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i+1)+j*this->Columnas));
                 }
             }
-/*
-            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 0){
-                grafo -> add_edge(intToString(i+(j-1)*this ->Columnas),intToString(i+j*this -> Columnas));
-            }
-
-            if(this -> mapa[i][j] == 0 && this -> mapa[i][j-1] == 3){
-                grafo -> add_edge(intToString(i+(j-1)*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-*/
         }
-    }
-
-    /*Los conectamos verticalmente*/
-#if 0
-    for(size_t i=0; i<this -> Filas; i++){
-        for(size_t j =0; j<this -> Columnas; j++){
-
-            if(this->mapa[i][j] == 0 || this->mapa[i][j] == 3){
-                if(this->mapa[i-1][j] == 0 || this->mapa[i-1][j] == 3){
-                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i-1)+j*this->Columnas));
-                }
-                if(this->mapa[i+1][j] == 0 || this->mapa[i+1][j] == 3){
-                    this->grafo->add_edge(intToString(i+j*this->Columnas), intToString((i+1)+j*this->Columnas));
-                }
-            }      
-
-/*
-            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 0){
-                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-
-            if(this -> mapa[i][j] == 0 && this -> mapa[i-1][j] == 3){
-                grafo -> add_edge(intToString((i-1)+j*this -> Columnas),intToString(i+j*this -> Columnas));
-            }
-*/
-       }
-    }
-#endif
-#endif
+   }
 }
 
 void Tablero::pinta(){
-    vredimensiona(this->Columnas * TAM + MARGEN * 2 + TAM*6, this->Filas * TAM + MARGEN * 2);
+    miniwin::vredimensiona(this->Columnas * TAM + MARGEN * 2 + TAM*6, this->Filas * TAM + MARGEN * 2);
     for(size_t i = 0; i < this->Filas; i++){
         for(size_t j = 0; j < this->Columnas; j++){
             this->tablero[i][j].pintaSolido();
@@ -359,17 +307,17 @@ bool Tablero::colision(Figura figura){
 }
 
 void Tablero::repinta(){
-    borra();
+    miniwin::borra();
     this->pinta();
 
     for(size_t i = 0; i < this->vidas ; i++){
         Pacman p_v = Pacman(23,2+i*2,Colors::Yellow,Colors::Black);
         p_v.pinta_der();
     }
-    color(BLANCO);
-    texto(23*TAM, 10*TAM, "Puntos:");
-    texto(23*TAM,11*TAM, intToString(this->puntos));
-    refresca();
+    miniwin::color(miniwin::BLANCO);
+    miniwin::texto(23*TAM, 15*TAM, "Puntos:");
+    miniwin::texto(23*TAM,16*TAM, intToString(this->puntos));
+    miniwin::refresca();
 }
 
 
@@ -440,35 +388,132 @@ void Tablero::moveFantasma(Fantasma* f,Tablero* T,Pacman* p, int color){
             break;
     }
 
-    //std::cout << std::endl <<"Paso el case" <<std::endl;
     if(posFantasma != posPacman){
         Stack<std::string> *s = T -> grafo->goTo(posFantasma, posPacman);
 
-        //std::cout<<posFantasma<<" "<<posPacman<<std::endl;
 
-        //T.grafo ->print();
-        //while (s ->Len() > 5 && !s ->IsEmpty())
-        //{
-            /*Convertimos a entero*/
-            s->Pop();
-            posIntFantasma = stringToInt(s ->Pop());
 
-            /*Sacamos las coordenadas*/
-            y = posIntFantasma%T -> Columnas;
+        /*Convertimos a entero*/
+        s->Pop();
+        posIntFantasma = stringToInt(s ->Pop());
 
-            x = (posIntFantasma -y)/T -> Columnas;
+        /*Sacamos las coordenadas*/
+        y = posIntFantasma%T -> Columnas;
 
-            /*Verificamos que sea una posición valida*/      
-            if(T -> mapa[y][x] != 2 && T -> mapa[y][x] != 1){
-                f ->setPosicion(x,y);
-            }
-            
+        x = (posIntFantasma -y)/T -> Columnas;
 
-            //std::cout<< posIntFantasma << " -> x: " << x << " y: " << y <<std::endl;
-        //}  
-        //std::cout << std::endl <<"Paso el while" <<std::endl;       
+        size_t y_actual = p->getPosicion().y;
+        size_t x_actual = p->getPosicion().x;
+
+        Fantasma f_copia = *f;
+
+        if(x < x_actual ){
+            f->mueve_derecha();
+        }
+        else if(x > x_actual){
+            f->mueve_izquierda();
+        }
+        else if (y < y_actual){
+            f->mueve_abajo();
+        }
+        else if( y > y_actual){
+            f->mueve_arriba();
+        }
+        
+        if(T->colision(*f)){
+            *f = f_copia;
+        }
+        f->pinta();
+    
     }
 }
 
+void Tablero::huyeFantasma(Fantasma* f,Tablero* T,Pacman* p, int color){
+
+    /*Varibales necesarias*/
+    std::string posFantasma = intToString(f->getPosicion().y + f->getPosicion().x * T -> Columnas);
+    std::string posPacman = intToString(p->getPosicion().y + p->getPosicion().x * T -> Columnas);
+    size_t x =0,y=0;
+    size_t posIntFantasma =0;
+
+    /*Obtenemos el mapa del grafo*/
+    Map<std::string,Vertex*> *mapa = T -> grafo -> get_map();
+
+    /*Buscamos al pacman*/
+
+    mapa -> search(posPacman);
+
+    /*obtenemos a la couple que contiene al pacman*/
+
+    Couple<std::string,Vertex*> *couplePacman = mapa -> getCursor();
+
+    /*Obtenemos al vertex de pacman*/
+
+    Vertex *pacman = couplePacman ->getValue();
+
+    /*Obtenemos a los vecinos de pacman*/
+
+    DLL<Vertex*>* vecinos = pacman -> get_neighbors();
+
+    /*Vertex temporal para recibir la información*/
+    Vertex *tmp;
+
+    /*Dependiendo el fantasma le daremos uan posición de pacman*/
+
+    switch(color){
+        case 0:
+            /*Le damos la posición exacta*/
+            break;
+        case 1: 
+            vecinos -> CursorFirst();
+            vecinos -> Peek(&tmp);
+            posPacman = tmp -> get_name();
+            break;
+        case 2:
+            vecinos -> CursorLast();
+            vecinos -> Peek(&tmp);
+            posPacman = tmp -> get_name();
+            break;
+    }
+
+    if(posFantasma != posPacman){
+        Stack<std::string> *s = T -> grafo->goTo(posFantasma, posPacman);
+
+
+
+        /*Convertimos a entero*/
+        s->Pop();
+        posIntFantasma = stringToInt(s ->Pop());
+
+        /*Sacamos las coordenadas*/
+        y = posIntFantasma%T -> Columnas;
+
+        x = (posIntFantasma -y)/T -> Columnas;
+
+        size_t y_actual = p->getPosicion().y;
+        size_t x_actual = p->getPosicion().x;
+
+        Fantasma f_copia = *f;
+
+        if(x > x_actual ){
+            f->mueve_derecha();
+        }
+        else if(x < x_actual){
+            f->mueve_izquierda();
+        }
+        else if (y > y_actual){
+            f->mueve_abajo();
+        }
+        else if( y < y_actual){
+            f->mueve_arriba();
+        }
+        
+        if(T->colision(*f)){
+            *f = f_copia;
+        }
+        f->pinta();
+    
+    }
+}
 
 #endif  //TABLERO_HPP
