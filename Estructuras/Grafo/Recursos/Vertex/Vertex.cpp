@@ -48,15 +48,14 @@ void Vertex::print_neighbors()
 
 void Vertex::print(){
 	std::string color;
+
+	/*Determinamos el color del vertex para mostrarlo*/
 	switch(this->color){
 		case Vertex::Colors::BLACK: color = "BLACK"; break;
 		case Vertex::Colors::GRAY: color = "GRAY"; break;
 		case Vertex::Colors::WHITE: color = "WHITE"; break;
 	}
 	std::cout << " Nombre: " << this -> get_name()<< " Distancia: " << this -> get_distance() << " Color: " << color << " Predecesor: " << this -> get_predecesor() <<  "\n";
-	//std::cout << this->name << " " << this->distance <<" "<< color<<" "<<this->predecesor<<" "<<this->weigth<<" "<<this->discovery_time <<"/"<< this->finish_time;
-	//std::cout << this->name <<", x: "<< this->x <<", y: "<< this->y << ", d: "<< this->distance;
-	//std::cout << "\n";
 }
 
 void Vertex::set_distance( int d){
@@ -109,20 +108,4 @@ int Vertex::get_discovery_time(){
 
 void Vertex::set_discovery_time(size_t ft){
 	this->discovery_time = ft;
-}
-
-void Vertex::set_X( int _x ){
-	this->x = _x;
-}
-	
-void Vertex::set_Y( int _y ){
-	this->y = _y;
-}
-
-int Vertex::get_X(){
-	return this->x;
-}
-
-int Vertex::get_Y(){
-	return this->y;
 }
