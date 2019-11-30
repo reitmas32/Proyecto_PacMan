@@ -13,7 +13,7 @@
 
 #include "Fantasma.hpp"
 
-#include "../../Estructuras/Grafo/Grafo.hpp"
+#include "../Estructuras/Grafo/Grafo.hpp"
 
 const size_t COLUMNAS = 19;
 const size_t FILAS = 23;
