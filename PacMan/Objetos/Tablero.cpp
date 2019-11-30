@@ -5,7 +5,7 @@ Tablero::Tablero(int ColorPared, int ColorCamino){
     this->ColorPared = ColorPared;
     this->ColorCamino = ColorCamino;
     
-    /*Creamo el mapa*/
+    /*Creamos el mapa*/
 
     /*Definimos las dimensiones*/
     this->Columnas = COLUMNAS;

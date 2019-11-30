@@ -5,10 +5,7 @@
 /**!<Bibliotecas necesarias*/
 #include <iostream>
 #include <string>
-#include <list>
 #include "DLL.hpp"
-#include <vector>
-#include <algorithm>
 
 /**
  *@class Vertex
@@ -198,34 +195,6 @@ public:
 	 *@param ft Tiempo en el que se descubrio el vertex
 	 */
 	void set_discovery_time(size_t ft);
-
-	/**
-	 *@brief
-	 *
-	 *@param
-	 */
-	void set_X( int _x );
-
-	/**
-	 *@brief
-	 *
-	 *@param
-	 */	
-	void set_Y( int _y );
-
-	/**
-	 *@brief
-	 *
-	 *@return
-	 */
-	int get_X();
-
-	/**
-	 *@brief
-	 *
-	 *@return
-	 */
-	int get_Y();
 
 };
 #endif

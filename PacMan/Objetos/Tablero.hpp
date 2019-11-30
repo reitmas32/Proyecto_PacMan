@@ -15,52 +15,50 @@
 
 #include "../../Estructuras/Grafo/Grafo.hpp"
 
-#include <fstream>
-
 const size_t COLUMNAS = 19;
-        const size_t FILAS = 23;
-        const size_t NUM_FANTASMAS = 5;
-        const size_t NUM_PILDORAS = 4;
-        const size_t NUM_VIDAS = 1;
-        const int POS_PACMAN_ORIG_X = 9;
-        const int POS_PACMAN_ORIG_Y = 18;
-        const int POS_FANTASMA_ROJO_ORIG_X = 9;
-        const int POS_FANTASMA_ROJO_ORIG_Y = 8;
-        const int POS_FANTASMA_VERDE_ORIG_X = 6;
-        const int POS_FANTASMA_VERDE_ORIG_Y = 10;
-        const int POS_FANTASMA_MAGENTA_ORIG_X = 12;
-        const int POS_FANTASMA_MAGENTA_ORIG_Y = 10;
-        const int POS_FANTASMA_CYAN_ORIG_X = 14;
-        const int POS_FANTASMA_CYAN_ORIG_Y = 16;
-        const int POS_FANTASMA_WHITE_ORIG_X = 7;
-        const int POS_FANTASMA_WHITE_ORIG_Y = 16;
-        const int MAX_PUNTAJE = 185;
+const size_t FILAS = 23;
+const size_t NUM_FANTASMAS = 5;
+const size_t NUM_PILDORAS = 4;
+const size_t NUM_VIDAS = 1;
+const int POS_PACMAN_ORIG_X = 9;
+const int POS_PACMAN_ORIG_Y = 18;
+const int POS_FANTASMA_ROJO_ORIG_X = 9;
+const int POS_FANTASMA_ROJO_ORIG_Y = 8;
+const int POS_FANTASMA_VERDE_ORIG_X = 6;
+const int POS_FANTASMA_VERDE_ORIG_Y = 10;
+const int POS_FANTASMA_MAGENTA_ORIG_X = 12;
+const int POS_FANTASMA_MAGENTA_ORIG_Y = 10;
+const int POS_FANTASMA_CYAN_ORIG_X = 14;
+const int POS_FANTASMA_CYAN_ORIG_Y = 16;
+const int POS_FANTASMA_WHITE_ORIG_X = 7;
+const int POS_FANTASMA_WHITE_ORIG_Y = 16;
+const int MAX_PUNTAJE = 185;
 
-        const uint8_t Mapa[FILAS][COLUMNAS] = {
-            {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-            {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
-            {2,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,2},
-            {2,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,0,1,2},
-            {2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2},
-            {2,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,2},
-            {2,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,1,2},
-            {2,1,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,1,2},
-            {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
-            {2,1,0,1,1,0,1,0,1,0,1,0,1,3,1,1,0,1,2},
-            {2,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,1,2},
-            {2,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,2},
-            {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
-            {2,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,2},
-            {2,1,0,1,1,0,1,0,0,1,0,0,1,0,1,1,0,1,2},
-            {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
-            {2,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2},
-            {2,1,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1,2},
-            {2,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,2},
-            {2,1,1,0,0,1,0,1,1,1,1,1,0,1,0,0,1,1,2},
-            {2,1,0,0,0,0,0,0,0,1,0,0,0,0,3,0,0,1,2},
-            {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
-            {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
-        };
+const uint8_t Mapa[FILAS][COLUMNAS] = {
+    {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+    {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
+    {2,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,2},
+    {2,1,0,1,1,0,1,1,0,1,0,1,1,0,1,1,0,1,2},
+    {2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2},
+    {2,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,2},
+    {2,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,1,2},
+    {2,1,0,1,1,0,1,1,0,0,0,1,1,0,1,1,0,1,2},
+    {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
+    {2,1,0,1,1,0,1,0,1,0,1,0,1,3,1,1,0,1,2},
+    {2,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,1,2},
+    {2,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,2},
+    {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
+    {2,1,0,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1,2},
+    {2,1,0,1,1,0,1,0,0,1,0,0,1,0,1,1,0,1,2},
+    {2,1,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,1,2},
+    {2,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2},
+    {2,1,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1,2},
+    {2,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,2},
+    {2,1,1,0,0,1,0,1,1,1,1,1,0,1,0,0,1,1,2},
+    {2,1,0,0,0,0,0,0,0,1,0,0,0,0,3,0,0,1,2},
+    {2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2},
+    {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
+};
 
 /**
  *@class Tablero
@@ -75,31 +73,31 @@ public:
     /**!<*/
     int posFantasma;
 
-    /**!<*/
+    /**!<Columnas del tablero*/
     size_t Columnas;
 
-    /**!<*/
+    /**!<Filas del tablero*/
     size_t Filas;
 
-    /**!<*/
+    /**!<Matriz que contiene el mapa del tablero*/
     uint8_t** mapa;
 
-    /**!<*/
+    /**!<Matriz que contiene al mapa para pintarlo en pantallas*/
     Cuadro** tablero;
 
-    /**!<*/
+    /**!<Numero de vidas de pacman*/
     size_t vidas;
 
-    /**!<*/
+    /**!<Color de la pared del tablero*/
     int ColorPared;
 
-    /**!<*/
+    /**!<Color del camino del tablero*/
     int ColorCamino;
 
-    /**!<*/
+    /**!<Numero de puntos obtenidos*/
     size_t puntos;
 
-    /**!<*/
+    /**!<Camino por el cual pueden andar los fantasmas y pacman*/
     Graph* grafo;
 
     /**
@@ -126,9 +124,9 @@ public:
      *
      *@param mapa
      *
-     *@pram ColorPared[]
+     *@pram ColorPared
      *
-     *@param ColorCamino[]
+     *@param ColorCamino
      */
     Tablero(int ColorPared, int ColorCamino);
 
@@ -138,7 +136,7 @@ public:
     ~Tablero();
 
     /**
-     *@brief
+     *@brief Método que crea el mundo en cual se jugara
      */
     void creaMundo();
 
@@ -148,24 +146,23 @@ public:
     void creaGrafo();
 
     /**
-     *@brief
+     *@brief Método que pinta al tablero
      */
     void pinta();
 
     /**
-     *@brief
+     *@brief Método que checa las colisiones del juego
+     *
+     *@param Figura figura a la cual se checara si hay colisión
+     *
+     *@return True si hay una colisción, en caso contrario retorna false
      */
     bool colision(Figura figura);
 
     /**
-     *@brief
+     *@brief Método que repinta el tablero
      */
     void repinta();
-
-    /**
-     *@brief
-     */
-    bool deadPacman(Pacman p, Fantasma* f);
 
     /**
      *@brief Función que mueve a lso fantasmas

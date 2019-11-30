@@ -5,12 +5,9 @@
 /**!<Bibliotecas necesarias*/
 #include <iostream>
 #include <string>
-#include <list>
 #include <cstring>
 #include "Recursos/Map.hpp"
-#include <vector>
 #include "Recursos/Vertex.hpp"
-//#include "Recursos/Administrador/Administrador.hpp"
 #include "Recursos/Couple.hpp"
 #include "Recursos/DLL.hpp"
 #include "Recursos/Stack.hpp"
@@ -137,16 +134,6 @@ public:
 	 *@return true si se conectaron los vertex, en caso contrario retorna false
 	 */
 	bool add_edge_weighted( std::string edge1, std::string edge2, int weigth);
-
-	/**
-	 *@brief
-	 */
-	void create_Graph();
-
-	/**
-	 *@brief
-	 */
-	void cargar_Plano();
 
 	/**
 	 *@brief Método que indica el camino a seguir de un vertex a otro

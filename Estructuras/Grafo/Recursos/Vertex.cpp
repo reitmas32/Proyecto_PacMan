@@ -111,18 +111,3 @@ void Vertex::set_discovery_time(size_t ft){
 	this->discovery_time = ft;
 }
 
-void Vertex::set_X( int _x ){
-	this->x = _x;
-}
-	
-void Vertex::set_Y( int _y ){
-	this->y = _y;
-}
-
-int Vertex::get_X(){
-	return this->x;
-}
-
-int Vertex::get_Y(){
-	return this->y;
-}

@@ -13,8 +13,6 @@
  */
 
 class Fantasma : public Figura{
-private:
-
 public:
 
     /**
@@ -41,15 +39,19 @@ public:
     ~Fantasma();
 
     /** 
-     *@brief
+     *@brief Método que pinta al fantasma
      */
     void pinta();
 
     /** 
-     *@brief
+     *@brief Método que pinta al fantasma de azul
      */
     void pintaAzul();
 
+
+    /** 
+     *@brief Método que pinta al fantasma Grande
+     */
     static void pintaBigFantasma();
 };
 

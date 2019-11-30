@@ -23,22 +23,22 @@ public:
     ~Figura();
 
     /**
-     *@brief
+     *@brief Método que mueve hacia arriba a la figura
      */
     void mueve_arriba();
 
     /**
-     *@brief
+     *@brief Método que mueve hacia abajo a la figura
      */
     void mueve_abajo();
 
     /**
-     *@brief
+     *@brief Método que mueve hacia la derecha la figura
      */
     void mueve_derecha();
 
     /**
-     *@brief
+     *@brief Método que mueve hacia la izquierda la figura
      */
     void mueve_izquierda();
 };
