@@ -547,6 +547,8 @@ int rgbs[][3] = {
    { 255,   0, 255 }, // MAGENTA
    {   0, 255, 255 }, // CYAN
    { 255, 255, 255 }, // BLANCO
+   { 101,  67,  33 }, // CAFE
+   { 153, 153, 153 }, // GRIS
 };
 
 inline void _color_rgb(int r, int g, int b) {
@@ -558,7 +560,7 @@ inline void _color_rgb(int r, int g, int b) {
 inline int _color(int col) {
    static int _curr = 0;
    int ret = _curr;
-   if (col >= 0 && col < 8) {
+   if (col >= 0 && col < 10) {
       _color_rgb(rgbs[col][0], rgbs[col][1], rgbs[col][2]);
       _curr = col;
    }

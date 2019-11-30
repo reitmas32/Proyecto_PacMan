@@ -29,7 +29,7 @@ public:
      *
      *@param colorDecora[]
      */
-    Comida(int x, int y, int colorSolido[], int colorDecora[]);
+    Comida(int x, int y, int colorSolido, int colorDecora);
 
     /**
      *@brief Método destructor de Comida
@@ -46,41 +46,5 @@ public:
      */
     void pintaGrande();
 };
-
-Comida::Comida(int x, int y, int colorSolido[], int colorDecora[])
-{
-    this->setPosicion(x,y);
-    this->setColorSolido(colorSolido);
-    this->setColorDecora(colorDecora);
-}
-
-Comida::Comida(/* args */)
-{
-}
-
-Comida::~Comida()
-{
-}
-
-void Comida::pinta(){
-    miniwin::color_rgb(getColorSolido()[0],
-                       getColorSolido()[1],
-                       getColorSolido()[2]
-    );
-    miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM + 6,
-                                 MARGEN + 1 + this->getPosicion().y * TAM + 6,
-                                 MARGEN + 1 + this->getPosicion().x * TAM + 8,
-                                 MARGEN + 1 + this->getPosicion().y * TAM + 8);
-}
-
-void Comida::pintaGrande(){
-    miniwin::color_rgb(getColorSolido()[0],
-                       getColorSolido()[1],
-                       getColorSolido()[2]
-    );
-
-    miniwin::circulo_lleno(  MARGEN + 1 + this->getPosicion().x * TAM + 7,
-                            MARGEN + 1 + this->getPosicion().y * TAM + 6,3);
-}
 
 #endif  //COMIDA_HPP

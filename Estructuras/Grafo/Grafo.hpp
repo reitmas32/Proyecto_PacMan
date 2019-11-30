@@ -7,13 +7,13 @@
 #include <string>
 #include <list>
 #include <cstring>
-#include "Recursos/MapTemplate/Map.hpp"
+#include "Recursos/Map.hpp"
 #include <vector>
-#include "Recursos/Vertex/Vertex.hpp"
-#include "Recursos/Administrador/Administrador.hpp"
-#include "Recursos/Couple/Couple.hpp"
-#include "Recursos/DLLTemplate/DLL.hpp"
-#include "Recursos/StackTemplate/Stack.hpp"
+#include "Recursos/Vertex.hpp"
+//#include "Recursos/Administrador/Administrador.hpp"
+#include "Recursos/Couple.hpp"
+#include "Recursos/DLL.hpp"
+#include "Recursos/Stack.hpp"
 
 /**
  *@class Graph
@@ -25,9 +25,6 @@ private:
 
 	/**!<Lista de vertex en el grafo*/
 	Map<std::string,Vertex*> *vertices;
-
-	/**!<*/
-	Administrador admon;
 
 	/**
 	 *@brief Método que imprime el value de una couple

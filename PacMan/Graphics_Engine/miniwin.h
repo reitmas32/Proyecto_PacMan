@@ -70,7 +70,8 @@ enum {
 
 enum {
   NEGRO, ROJO, VERDE, AZUL,
-  AMARILLO, MAGENTA, CYAN, BLANCO
+  AMARILLO, MAGENTA, CYAN,
+  BLANCO,CAFE,GRIS
 };
 
 } // namespace miniwin

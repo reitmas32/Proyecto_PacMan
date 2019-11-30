@@ -1,13 +1,10 @@
-#ifndef CUADRO_CPP
-#define CUADRO_CPP
 #include "Cuadro.hpp"
-
 
 Cuadro::Cuadro(/* args */)
 {
 }
 
-Cuadro::Cuadro(int x, int y, int colorSolido[], int colorDecora[])
+Cuadro::Cuadro(int x, int y, int colorSolido, int colorDecora)
 {
     
     this->setPosicion(x,y);
@@ -17,19 +14,13 @@ Cuadro::Cuadro(int x, int y, int colorSolido[], int colorDecora[])
 
 void Cuadro::pinta(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    miniwin::color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
-    );
+    miniwin::color(getColorSolido());
     miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,
                         MARGEN + this->getPosicion().y * TAM + TAM);
     //Se cambia el color para pintar en el color Decora del cuadro
-    miniwin::color_rgb(getColorDecora()[0],
-              getColorDecora()[1],
-              getColorDecora()[2]
-    );
+    miniwin::color(getColorDecora());
     miniwin::rectangulo( MARGEN + 3 + this->getPosicion().x * TAM,
                 MARGEN + 3 + this->getPosicion().y * TAM,
                 MARGEN + this->getPosicion().x * TAM + TAM - 3,
@@ -38,10 +29,7 @@ void Cuadro::pinta(){
 
 void Cuadro::pintaSolido(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    miniwin::color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
-    );
+    miniwin::color(getColorSolido());
     miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,
@@ -51,5 +39,3 @@ void Cuadro::pintaSolido(){
 Cuadro::~Cuadro()
 {
 }
-
-#endif

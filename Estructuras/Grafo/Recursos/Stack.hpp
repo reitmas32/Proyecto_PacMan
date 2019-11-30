@@ -1,6 +1,6 @@
 #ifndef STACK_HPP
 #define STACK_HPP
-#include "../DLLTemplate/DLL.hpp"
+#include "DLL.hpp"
 #include <assert.h>
 
 template <class Item>

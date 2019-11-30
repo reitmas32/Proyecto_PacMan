@@ -17,11 +17,6 @@
 #include "miniwin.h"
 
 /**
- * BIblioteca que almacena los valores de los colores para el pseudomotorgrafico
- **/
-#include "Colors.hpp"
-
-/**
  * Es el margen del Display
  **/
 const int MARGEN = 25;
@@ -36,61 +31,44 @@ const int TAM = 20;
  **/
 typedef struct Coord{
     int x, y;
-    void rota_derecha();
 }Coord;
-
-/**
- * Metodo que rota cada cuador 90° ala derecha
- **/
-void Coord::rota_derecha(){
-    int tmp = this->x;
-    this->x = -this->y;
-    this->y = tmp;
-}
 
 //! Definicion de la Clase Cuadro de esta clase heredan todos los elementos del pseudomotorgrafico
 class Cuadro
 {
 protected:
     Coord posicion;
-    int id;
-    int colorSolido[3];
-    int colorDecora[3];
+    int colorSolido;
+    int colorDecora;
 public:
     Cuadro(/* args */);
-    Cuadro(int x, int y, int colorSolido[], int colorDecora[]);
+    Cuadro(int x, int y, int colorSolido, int colorDecora);
     ~Cuadro();
 
     Coord getPosicion(){return this->posicion;}
-    int* getColorSolido(){return this->colorSolido;}
-    int* getColorDecora(){return this->colorDecora;}
-    int getId(){return this->id;}
+    int getColorSolido(){return this->colorSolido;}
+    int getColorDecora(){return this->colorDecora;}
 
     void setPosicion(int x, int y){posicion.x = x; posicion.y = y;}
 
-    void setColorSolido(int colorSolido[]){
-        for (size_t i = 0; i < 3; i++){
-            this->colorSolido[i] = colorSolido[i];
-        }
+    void setColorSolido(int colorSolido){
+        this->colorSolido = colorSolido;
     }
-    void setColorDecora(int colorDecora[]){
-        for (size_t i = 0; i < 3; i++){
-            this->colorDecora[i] = colorDecora[i];
-        }
+    void setColorDecora(int colorDecora){
+        this->colorDecora = colorDecora;
     }
-    void setId(int id){this->id = id;}
 
     void pinta();
 
     void pintaSolido();
 };
 
-#if 1
+#if 0
 Cuadro::Cuadro(/* args */)
 {
 }
 
-Cuadro::Cuadro(int x, int y, int colorSolido[], int colorDecora[])
+Cuadro::Cuadro(int x, int y, int colorSolido, int colorDecora)
 {
     
     this->setPosicion(x,y);
@@ -100,19 +78,13 @@ Cuadro::Cuadro(int x, int y, int colorSolido[], int colorDecora[])
 
 void Cuadro::pinta(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    miniwin::color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
-    );
+    miniwin::color(getColorSolido());
     miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,
                         MARGEN + this->getPosicion().y * TAM + TAM);
     //Se cambia el color para pintar en el color Decora del cuadro
-    miniwin::color_rgb(getColorDecora()[0],
-              getColorDecora()[1],
-              getColorDecora()[2]
-    );
+    miniwin::color(getColorDecora());
     miniwin::rectangulo( MARGEN + 3 + this->getPosicion().x * TAM,
                 MARGEN + 3 + this->getPosicion().y * TAM,
                 MARGEN + this->getPosicion().x * TAM + TAM - 3,
@@ -121,10 +93,7 @@ void Cuadro::pinta(){
 
 void Cuadro::pintaSolido(){
     //Se cambia el color para pintar en el color Solido del cuadro
-    miniwin::color_rgb(getColorSolido()[0],
-              getColorSolido()[1],
-              getColorSolido()[2]
-    );
+    miniwin::color(getColorSolido());
     miniwin::rectangulo_lleno(   MARGEN + 1 + this->getPosicion().x * TAM,
                         MARGEN + 1 + this->getPosicion().y * TAM,
                         MARGEN + this->getPosicion().x * TAM + TAM,

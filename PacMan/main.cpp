@@ -10,7 +10,7 @@ int main() {
    srand(time(NULL));
    int Tecla = miniwin::tecla();
    /*Tablero*/
-   Tablero T = Tablero(MAPAS::LevelOne, Colors::Gray, Colors::Black);
+   Tablero T = Tablero(miniwin::GRIS, miniwin::NEGRO);
    T.creaMundo();
    T.creaGrafo();
    //T.pinta();
@@ -18,43 +18,37 @@ int main() {
    /*Creación de los fantasmas y pacman*/
    
    /*Pacman*/
-   Pacman pacman = Pacman(MAPAS::LevelOneWorld::POS_PACMAN_ORIG_X, 
-                     MAPAS::LevelOneWorld::POS_PACMAN_ORIG_Y,
-                     Colors::Yellow,Colors::Black);
-
-   //pacman.pinta_arri();
+   Pacman pacman = Pacman(POS_PACMAN_ORIG_X, 
+                     POS_PACMAN_ORIG_Y,
+                     miniwin::AMARILLO,miniwin::NEGRO);
 
     /*Fantasma Rojo*/
-    Fantasma f_rojo = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_ROJO_ORIG_X, 
-                               MAPAS::LevelOneWorld::POS_FANTASMA_ROJO_ORIG_Y,
-                               Colors::Red, Colors::Gray);
-    //f_rojo.pinta();
+    Fantasma f_rojo = Fantasma(POS_FANTASMA_ROJO_ORIG_X, 
+                               POS_FANTASMA_ROJO_ORIG_Y,
+                               miniwin::ROJO, miniwin::GRIS);
 
     /*Fantasma Verde*/
-    Fantasma f_verde = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_VERDE_ORIG_X, 
-                                MAPAS::LevelOneWorld::POS_FANTASMA_VERDE_ORIG_Y,
-                                Colors::Green, Colors::Gray);
-    //f_verde.pinta();
+    Fantasma f_verde = Fantasma(POS_FANTASMA_VERDE_ORIG_X, 
+                                POS_FANTASMA_VERDE_ORIG_Y,
+                                miniwin::VERDE, miniwin::GRIS);
 
     /*Fantasma Naranja*/
-    Fantasma f_magenta = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_MAGENTA_ORIG_X, 
-                                  MAPAS::LevelOneWorld::POS_FANTASMA_MAGENTA_ORIG_Y,
-                                  Colors::Magenta, Colors::Gray);
+    Fantasma f_magenta = Fantasma(POS_FANTASMA_MAGENTA_ORIG_X, 
+                                  POS_FANTASMA_MAGENTA_ORIG_Y,
+                                  miniwin::MAGENTA, miniwin::GRIS);
 
     /*Fantasma Cyan*/
-    Fantasma f_cyan = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_CYAN_ORIG_X, 
-                                  MAPAS::LevelOneWorld::POS_FANTASMA_CYAN_ORIG_Y,
-                                  Colors::Cyan, Colors::Gray);
+    Fantasma f_cyan = Fantasma(POS_FANTASMA_CYAN_ORIG_X, 
+                                  POS_FANTASMA_CYAN_ORIG_Y,
+                                  miniwin::CYAN, miniwin::GRIS);
 
     /*Fantasma Naranja*/
-    Fantasma f_white = Fantasma(MAPAS::LevelOneWorld::POS_FANTASMA_WHITE_ORIG_X, 
-                                  MAPAS::LevelOneWorld::POS_FANTASMA_WHITE_ORIG_Y,
-                                  Colors::White, Colors::Gray);
+    Fantasma f_white = Fantasma(POS_FANTASMA_WHITE_ORIG_X, 
+                                  POS_FANTASMA_WHITE_ORIG_Y,
+                                  miniwin::BLANCO, miniwin::GRIS);
    
-    //f_magenta.pinta();
 
-   Comida posComida[MAPAS::LevelOneWorld::COLUMNAS]
-                     [MAPAS::LevelOneWorld::FILAS];
+   Comida posComida[COLUMNAS][FILAS];
 
 
    Fantasma::pintaBigFantasma();
@@ -69,7 +63,7 @@ int main() {
 
    int dir = 0;
 
-   Fantasma* listaFantasmas[MAPAS::LevelOneWorld::NUM_FANTASMAS]; 
+   Fantasma* listaFantasmas[NUM_FANTASMAS]; 
 
    listaFantasmas[0] = &f_rojo;
    listaFantasmas[1] = &f_verde;
@@ -80,7 +74,7 @@ int main() {
    Pacman p_origen = pacman;
 
    for(size_t i = 0; i < T.vidas ; i++){
-        Pacman p_v = Pacman(MAPAS::LevelOneWorld::COLUMNAS + 5,2+i*2,Colors::Yellow,Colors::Black);
+        Pacman p_v = Pacman(COLUMNAS + 5,2+i*2,miniwin::AMARILLO, miniwin::NEGRO);
         p_v.pinta_der();
    }
 
@@ -116,16 +110,14 @@ int main() {
                   break;
             }
             if(dir != 0){
-               for (size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++)
+               for (size_t i = 0; i < NUM_FANTASMAS; i++)
                {
                   if(huye == 0){
                      Tablero::moveFantasma(listaFantasmas[i], &T, &pacman,i);
-                     listaFantasmas[i] -> pinta();
-                     listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1);                     
+                     listaFantasmas[i] -> pinta();                 
                   }else{
                      Tablero::huyeFantasma(listaFantasmas[i], &T, &pacman,i);
                      listaFantasmas[i] -> pintaAzul();
-                     listaFantasmas[i]->setTime(listaFantasmas[i]->getTime() + 1); 
                   }
 
                }               
@@ -159,8 +151,8 @@ int main() {
          T.repinta();         
          for(size_t i = 0; i < T.Columnas; i++){
             for(size_t j = 0; j < T.Filas; j++){
-               if(Colors::cmpColor(T.tablero[j][i].getColorDecora(), T.ColorCamino)){
-                  posComida[i][j] = Comida(i,j,Colors::Yellow, T.ColorCamino);
+               if( T.tablero[j][i].getColorDecora() == T.ColorCamino){
+                  posComida[i][j] = Comida(i,j,miniwin::AMARILLO, T.ColorCamino);
                   if(T.mapa[j][i] == 3){
                      posComida[i][j].pintaGrande();
                   }else{
@@ -176,7 +168,7 @@ int main() {
          }
 
 
-         for(size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++){
+         for(size_t i = 0; i < NUM_FANTASMAS; i++){
                if(huye == 0 ){
                   listaFantasmas[i]->pinta();
                }
@@ -199,9 +191,9 @@ int main() {
          }
          
          if( Tecla == miniwin::ARRIBA || Tecla == miniwin::ABAJO || Tecla == miniwin::DERECHA || Tecla == miniwin::IZQUIERDA){
-            if(Colors::cmpColor(T.tablero[pacman.getPosicion().y][pacman.getPosicion().x].getColorDecora(),T.ColorCamino)){
+            if( T.tablero[pacman.getPosicion().y][pacman.getPosicion().x].getColorDecora() == T.ColorCamino){
                T.tablero[pacman.getPosicion().y][pacman.getPosicion().x].setColorDecora(T.ColorPared);
-               posComida[pacman.getPosicion().x][pacman.getPosicion().y].setColorSolido(Colors::Black);
+               posComida[pacman.getPosicion().x][pacman.getPosicion().y].setColorSolido(miniwin::NEGRO);
                T.puntos++;
                if(T.mapa[pacman.getPosicion().y][pacman.getPosicion().x] == 3){
                   huye = 400;
@@ -211,7 +203,7 @@ int main() {
          //std::cout<<pacman.getPosicion().x<<", "<<pacman.getPosicion().y<<std::endl;
       }
 
-      for(size_t i = 0; i < MAPAS::LevelOneWorld::NUM_FANTASMAS; i++){
+      for(size_t i = 0; i < NUM_FANTASMAS; i++){
          Fantasma* f = listaFantasmas[i];
             if(pacman.getPosicion().x == f->getPosicion().x &&
                pacman.getPosicion().y == f->getPosicion().y){
@@ -225,7 +217,6 @@ int main() {
                         T.repinta();
                         miniwin::color(miniwin::BLANCO);
                         miniwin::texto(23*TAM, 15*TAM,"Moriste");
-                        //T.creaGrafo();
                         miniwin::espera(500);
                         break;
                      }                     
@@ -235,17 +226,16 @@ int main() {
                         T.repinta();
                         miniwin::color(miniwin::BLANCO);
                         miniwin::texto(23*TAM, 15*TAM,"Vida Extra");
-                        //T.creaGrafo();
                         miniwin::espera(500);
                   }
 
             } 
       }
 
-      if(T.puntos == MAPAS::LevelOneWorld::MAX_PUNTAJE){
+      if(T.puntos == MAX_PUNTAJE){
          T.repinta();
          miniwin::color(miniwin::BLANCO);
-         miniwin::texto(20*TAM, 15*TAM,"Felicidades Ganaste");
+         miniwin::texto(20*TAM, 20*TAM,"Felicidades Ganaste");
          miniwin::espera(1500);
          miniwin::vcierra();
       }
