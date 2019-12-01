@@ -14,7 +14,18 @@ void pintaScores(std::vector<Jugador> lista_jugadores, std::string nombre, int s
    lista_jugadores.push_back(jugador);
 
    //Ordeno la lista
-   Heap_Sort(lista_jugadores,lista_jugadores.size(), DESCENDENTE);
+   Jugador jugadores[lista_jugadores.size()];
+
+   for (size_t i = 0; i < lista_jugadores.size(); i++)
+   {
+      jugadores[i] = lista_jugadores[i];
+   }
+   Heap_Sort(jugadores,lista_jugadores.size(),  DESCENDENTE);
+
+   for (size_t i = 0; i < lista_jugadores.size(); i++)
+   {
+      lista_jugadores[i] = jugadores[i];
+   }
 
    //Pinto la lista de Jugadores
    miniwin::borra();
@@ -103,7 +114,7 @@ int main() {
 
    Pacman p_origen = pacman;
 
-   #pragma omp paralle for
+   #pragma omp parallel for
    for(size_t i = 0; i < T.vidas ; i++){
         Pacman p_v = Pacman(COLUMNAS + 5,2+i*2,miniwin::AMARILLO, miniwin::NEGRO);
         p_v.pinta_der();
@@ -142,7 +153,6 @@ int main() {
                   break;
             }
             if(dir != 0){
-               #pragma omp paralle for
                for (size_t i = 0; i < NUM_FANTASMAS; i++)
                {
                   if(huye == 0){
@@ -182,9 +192,7 @@ int main() {
 
       if(Tecla != miniwin::NINGUNA){
          T.repinta();        
-         #pragma omp paralle for 
          for(size_t i = 0; i < T.Columnas; i++){
-            #pragma omp paralle for 
             for(size_t j = 0; j < T.Filas; j++){
                if( T.tablero[j][i].getColorDecora() == T.ColorCamino){
                   posComida[i][j] = Comida(i,j,miniwin::AMARILLO, T.ColorCamino);
@@ -202,7 +210,6 @@ int main() {
             }
          }
 
-         #pragma omp paralle for 
          for(size_t i = 0; i < NUM_FANTASMAS; i++){
                if(huye == 0 ){
                   listaFantasmas[i]->pinta();
@@ -236,7 +243,6 @@ int main() {
             }
          }
       }
-      #pragma omp paralle for 
       for(size_t i = 0; i < NUM_FANTASMAS; i++){
          Fantasma* f = listaFantasmas[i];
             if(pacman.getPosicion().x == f->getPosicion().x &&
@@ -255,13 +261,15 @@ int main() {
                         miniwin::espera(500);
                         break;
                      }                     
-                  }else if(T.vidas <= 6){
-                     T.puntos += 20;
+                  }else{
                      f->setPosicion(9,10);
-                        T.repinta();
+                     if(T.vidas <= 4){
+                        T.vidas++;
                         miniwin::color(miniwin::BLANCO);
-                        miniwin::texto(23*TAM, 15*TAM,"Ganas Puntos");
-                        miniwin::espera(500);
+                        miniwin::texto(23*TAM, 15*TAM,"Ganas una Vida");
+                        miniwin::espera(500);                        
+                     }
+                     T.repinta();
                   }
 
             } 

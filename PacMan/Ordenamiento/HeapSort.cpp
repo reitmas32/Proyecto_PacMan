@@ -1,6 +1,6 @@
 #include "HeapSort.hpp"
 
-void print( std::vector<Jugador> jugadores, int tam){
+void print( Jugador jugadores[], int tam){
     for(int i = 0; i<tam; i++){
 		std::cout<<"Nombre: "<<jugadores[i].name<<", puntaje: "<<jugadores[i].value<<std::endl;
 	}
@@ -24,72 +24,75 @@ void swap(Jugador* num1, Jugador* num2){
     *num2 = temp;
 }
 
-void heapify_max(std::vector<Jugador> jugadores, int tam, int k) 
+void heapify_max(Jugador jugadores[], int tam, int k) 
 {
     int largest=k;
-    int left = 2*k + 1;  
-    int right = 2*k + 2; 
+    int left = 2*k + 1; // left = 2*i + 1 
+    int right = 2*k + 2; // right = 2*i + 2 
   
-    /*Si el hijo izquierdo es mas grande que la raíz*/
+    // If left child is larger than root 
     if (left < tam && jugadores[left] > jugadores[largest]) 
         largest = left; 
   
-    /*Si el hijo derecho es mas grande que el más grande hasta ahora*/
+    // If right child is larger than largest so far 
     if (right < tam && jugadores[right] > jugadores[largest]) 
         largest = right; 
 
-    /*Si el más grande no es la raíz*/
+    // If largest is not root 
     if (largest != k) 
     { 
         swap(&jugadores[k], &jugadores[largest]); 
   
+        // Recursively heapify the affected sub-tree 
         heapify_max(jugadores, k, largest); 
     } 
 }
 
-void heapify_min(std::vector<Jugador> jugadores, int tam, int k) 
+void heapify_min(Jugador jugadores[], int tam, int k) 
 { 
     int smallest=k;
-    int left = 2*k + 1; 
-    int right = 2*k + 2; 
+    int left = 2*k + 1; // left = 2*i + 1 
+    int right = 2*k + 2; // right = 2*i + 2 
   
-    /*Si el hijo izquierdo es mas pequeño que la raíz*/
+    // If left child is larger than root 
     if (left < tam && jugadores[left] < jugadores[smallest]) 
         smallest = left; 
   
-    /*Si el hijo derecho es mas pequeño que el más pequeño hasta ahora*/
+    // If right child is larger than largest so far 
     if (right < tam && jugadores[right] < jugadores[smallest]) 
         smallest = right; 
 
-    /*Si el más pequeño no es la raíz*/
+    // If largest is not root 
     if (smallest != k) 
     { 
         swap(&jugadores[k], &jugadores[smallest]); 
   
+        // Recursively heapify the affected sub-tree 
         heapify_min(jugadores, k, smallest); 
     } 
 }
 
-void build_max_heap(std::vector<Jugador> jugadores, int tam){
+void build_max_heap(Jugador jugadores[], int tam){
     for (int i = tam / 2 - 1; i >= 0; i--) 
         heapify_max(jugadores, tam, i); 
 }
 
-void build_min_heap(std::vector<Jugador> jugadores, int tam){
+void build_min_heap(Jugador jugadores[], int tam){
     for (int i = tam / 2 - 1; i >= 0; i--) 
         heapify_min(jugadores, tam, i); 
 }
 
-void Heap_Sort(std::vector<Jugador> jugadores, int tam, int direction){
+void Heap_Sort(Jugador jugadores[], int tam, int direction){
+
+    enum{ASCENDENTE=0, DESCENDENTE};
 
     if(direction == ASCENDENTE){
         build_max_heap(jugadores, tam);
         for (int i=tam-1; i>=0; i--) 
         { 
-            /*Mover la raíz actual al final*/
+            // Move current root to end 
             swap(&jugadores[0], &jugadores[i]); 
-
-            /*Invocar heapify max en el monticulo reducido*/
+            // call max heapify on the reduced heap 
             heapify_max(jugadores, i, 0); 
         }
     }
@@ -97,10 +100,9 @@ void Heap_Sort(std::vector<Jugador> jugadores, int tam, int direction){
         build_min_heap(jugadores, tam);
         for (int i=tam-1; i>=0; i--) 
         { 
-            /*Mover la raíz actual al final*/
+            // Move current root to end 
             swap(&jugadores[0], &jugadores[i]); 
-
-            /*Invocar heapify min en el monticulo reducido*/
+            // call max heapify on the reduced heap 
             heapify_min(jugadores, i, 0); 
         }
     }
