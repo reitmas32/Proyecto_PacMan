@@ -1,9 +1,20 @@
 #include "HeapSort.hpp"
 
-void print( Jugador jugadores[], int tam){
+void print( std::vector<Jugador> jugadores, int tam){
     for(int i = 0; i<tam; i++){
 		std::cout<<"Nombre: "<<jugadores[i].name<<", puntaje: "<<jugadores[i].value<<std::endl;
 	}
+}
+
+void printWindow( std::vector<Jugador> jugadores, int tam){
+    miniwin::color(miniwin::BLANCO);
+    for(int i = 0; i<tam; i++){
+		std::string text = "";
+        text += "#" + Tablero::intToString(i + 1)+ " " + jugadores[i].name + " : " + Tablero::intToString(jugadores[i].value);
+        miniwin::texto(60,30 + i*TAM, text);
+        if( i == 9 ) break;
+	}
+    miniwin::refresca();
 }
 
 void swap(Jugador* num1, Jugador* num2){
@@ -13,7 +24,7 @@ void swap(Jugador* num1, Jugador* num2){
     *num2 = temp;
 }
 
-void heapify_max(Jugador jugadores[], int tam, int k) 
+void heapify_max(std::vector<Jugador> jugadores, int tam, int k) 
 {
     int largest=k;
     int left = 2*k + 1;  
@@ -36,7 +47,7 @@ void heapify_max(Jugador jugadores[], int tam, int k)
     } 
 }
 
-void heapify_min(Jugador jugadores[], int tam, int k) 
+void heapify_min(std::vector<Jugador> jugadores, int tam, int k) 
 { 
     int smallest=k;
     int left = 2*k + 1; 
@@ -59,19 +70,17 @@ void heapify_min(Jugador jugadores[], int tam, int k)
     } 
 }
 
-void build_max_heap(Jugador jugadores[], int tam){
+void build_max_heap(std::vector<Jugador> jugadores, int tam){
     for (int i = tam / 2 - 1; i >= 0; i--) 
         heapify_max(jugadores, tam, i); 
 }
 
-void build_min_heap(Jugador jugadores[], int tam){
+void build_min_heap(std::vector<Jugador> jugadores, int tam){
     for (int i = tam / 2 - 1; i >= 0; i--) 
         heapify_min(jugadores, tam, i); 
 }
 
-void Heap_Sort(Jugador jugadores[], int tam, int direction){
-
-    enum{ASCENDENTE=0, DESCENDENTE};
+void Heap_Sort(std::vector<Jugador> jugadores, int tam, int direction){
 
     if(direction == ASCENDENTE){
         build_max_heap(jugadores, tam);

@@ -2,6 +2,9 @@
 miniwin.o:PacMan/Graphics_Engine/miniwin.h PacMan/Graphics_Engine/miniwin.cpp
 	g++ -Wall -g -DDEBUG  -c "PacMan/Graphics_Engine/miniwin.cpp" -o "PacMan/bin/miniwin.o"
 
+ManejadorEntrada.o:PacMan/Graphics_Engine/ManejadorEntrada.hpp PacMan/Graphics_Engine/ManejadorEntrada.cpp
+	g++ -Wall -g -DDEBUG  -c "PacMan/Graphics_Engine/ManejadorEntrada.cpp" -o "PacMan/bin/ManejadorEntrada.o"
+
 Cuadro.o:PacMan/Graphics_Engine/Cuadro.hpp PacMan/Graphics_Engine/Cuadro.cpp
 	g++ -Wall -g -DDEBUG  -c "PacMan/Graphics_Engine/Cuadro.cpp" -o "PacMan/bin/Cuadro.o"
 
@@ -35,7 +38,7 @@ Jugadores.o:PacMan/Ordenamiento/Jugadores.hpp PacMan/Ordenamiento/Jugadores.cpp
 	g++ -Wall -g -DDEBUG  -c "PacMan/Ordenamiento/Jugadores.cpp" -o "PacMan/bin/Jugadores.o"
 #-------------------Main-------------------------#
 main.o:PacMan/main.cpp miniwin.o
-	g++ -Wall -g -DDEBUG  -c "PacMan/main.cpp" -o "PacMan/bin/main.o"
+	g++ -Wall -g -DDEBUG  -c "PacMan/main.cpp" -o "PacMan/bin/main.o" -fopenmp
 
-Pacman:main.o miniwin.o Cuadro.o Figura.o Fantasma.o Pacman.o Comida.o Tablero.o Grafo.o Vertex.o HeapSort.o Jugadores.o
-	g++  -o "PacMan/bin/PacMan" "PacMan/bin/main.o" "PacMan/bin/miniwin.o" "PacMan/bin/Cuadro.o" "PacMan/bin/Figura.o" "PacMan/bin/Fantasma.o" "PacMan/bin/Pacman.o" "PacMan/bin/Comida.o" "PacMan/bin/Tablero.o" "PacMan/bin/Grafo.o" "PacMan/bin/Vertex.o" "PacMan/bin/HeapSort.o" "PacMan/bin/Jugadores.o" -pthread  -lX11
+Pacman:main.o miniwin.o Cuadro.o Figura.o Fantasma.o Pacman.o Comida.o Tablero.o Grafo.o Vertex.o HeapSort.o Jugadores.o ManejadorEntrada.o
+	g++  -o "PacMan/bin/PacMan" "PacMan/bin/main.o" "PacMan/bin/miniwin.o" "PacMan/bin/Cuadro.o" "PacMan/bin/Figura.o" "PacMan/bin/Fantasma.o" "PacMan/bin/Pacman.o" "PacMan/bin/Comida.o" "PacMan/bin/Tablero.o" "PacMan/bin/Grafo.o" "PacMan/bin/Vertex.o" "PacMan/bin/HeapSort.o" "PacMan/bin/Jugadores.o" "PacMan/bin/ManejadorEntrada.o" -pthread  -lX11

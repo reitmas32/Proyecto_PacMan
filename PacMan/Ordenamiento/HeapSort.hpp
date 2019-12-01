@@ -1,6 +1,9 @@
 #ifndef HEAPSORT_HPP
 #define HEAPSORT_HPP
 #include "Jugadores.hpp"
+#include "../Objetos/Tablero.hpp"
+
+enum{ASCENDENTE=0, DESCENDENTE};
 
 /**
  *@brief Función que imprime lso datos de los jugadores
@@ -9,7 +12,16 @@
  *
  *@param tam Tamñao de la lista de jugadores
  */
-void print( Jugador jugadores[], int tam);
+void print( std::vector<Jugador> jugadores, int tam);
+
+/**
+ *@brief Función que imprime los datos de los jugadores en el Display
+ *
+ *@param jugadores[] Lista de jugadores
+ *
+ *@param tam Tamñao de la lista de jugadores
+ */
+void printWindow( std::vector<Jugador> jugadores, int tam);
 
 /**
  *@brief Función que intercambia a jugadores de lugar
@@ -29,7 +41,7 @@ void swap(Jugador* num1, Jugador* num2);
  *
  *@param k Pivote para ordenar la lista
  */
-void heapify_max(Jugador jugadores[], int tam, int k);
+void heapify_max(std::vector<Jugador> jugadores, int tam, int k);
 
 /**
  *@brief Función que ordena al arreglo de forma descendente
@@ -41,7 +53,7 @@ void heapify_max(Jugador jugadores[], int tam, int k);
  *@param k Pivote para ordenar la lista
  */
 
-void heapify_min(Jugador jugadores[], int tam, int k);
+void heapify_min(std::vector<Jugador> jugadores, int tam, int k);
 
 /**
  *@brief Función que crea un monticulo cuya raiz sea el mayor de los valores del arreglo
@@ -50,7 +62,7 @@ void heapify_min(Jugador jugadores[], int tam, int k);
  *
  *@param tam Tamaño del arreglo
  */
-void build_max_heap(Jugador jugadores[], int tam);
+void build_max_heap(std::vector<Jugador> jugadores, int tam);
 
  /**
  *@brief Función que crea un monticulo cuya raiz sea el menor de los valores del arreglo
@@ -59,7 +71,7 @@ void build_max_heap(Jugador jugadores[], int tam);
  *
  *@param tam Tamaño del arreglo
  */
-void build_min_heap(Jugador jugadores[], int tam);
+void build_min_heap(std::vector<Jugador> jugadores, int tam);
 
 /**
  *@brief Función activadora del algoritmo
@@ -70,6 +82,6 @@ void build_min_heap(Jugador jugadores[], int tam);
  *
  *@param direction Dirección de ordenamiento del arreglo
  */
-void Heap_Sort(Jugador jugadores[], int tam, int direction);
+void Heap_Sort(std::vector<Jugador> jugadores, int tam, int direction);
 
 #endif  //HEAPSORT_HPP

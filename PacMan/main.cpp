@@ -1,9 +1,41 @@
+#include <omp.h>
 #include "Objetos/Tablero.hpp"
 #include "Objetos/Comida.hpp"
 #include "Ordenamiento/HeapSort.hpp"
+#include "Graphics_Engine/ManejadorEntrada.hpp"
+
+void pintaScores(std::vector<Jugador> lista_jugadores, std::string nombre, int score, Jugadores jugadorAdmin){
+   //Jugador Actual
+   Jugador jugador;
+   strcpy(jugador.name, nombre.c_str());
+   jugador.value = score;
+
+   //Se ingresa el jugador
+   lista_jugadores.push_back(jugador);
+
+   //Ordeno la lista
+   Heap_Sort(lista_jugadores,lista_jugadores.size(), DESCENDENTE);
+
+   //Pinto la lista de Jugadores
+   miniwin::borra();
+   printWindow(lista_jugadores, lista_jugadores.size());
+   miniwin::texto(100,300,"Oprime espacio para salir");
+   miniwin::refresca();
+   int Tecla = miniwin::tecla();
+   while(Tecla != miniwin::ESPACIO){
+      miniwin::espera(100);
+      Tecla = miniwin::tecla();
+   }
+
+   //Guardo la Lista 
+	jugadorAdmin.setJugadores(lista_jugadores);
+	jugadorAdmin.escribirJugadores();
+}
 
 int main() {
    miniwin::vredimensiona(400, 300);
+   ManejadorEntrada sr = ManejadorEntrada(150,150,150,170,miniwin::BLANCO, miniwin::ROJO);
+
    srand(time(NULL));
    int Tecla = miniwin::tecla();
    /*Tablero*/
@@ -13,7 +45,7 @@ int main() {
 
    /*Creacion del Arreglo de Jugadores*/
    Jugadores jugadorAdmin;
-	 std::vector<Jugador> lista_jugadores = jugadorAdmin.getJugadores();
+	std::vector<Jugador> lista_jugadores = jugadorAdmin.getJugadores();
 
    /*Creación de los fantasmas y pacman*/
    
@@ -73,6 +105,7 @@ int main() {
 
    Pacman p_origen = pacman;
 
+   #pragma omp paralle for
    for(size_t i = 0; i < T.vidas ; i++){
         Pacman p_v = Pacman(COLUMNAS + 5,2+i*2,miniwin::AMARILLO, miniwin::NEGRO);
         p_v.pinta_der();
@@ -82,7 +115,8 @@ int main() {
       miniwin::espera(100);
       Tecla = miniwin::tecla();
    }
-
+   miniwin::borra();
+   std::string nombre = sr.obtenerEntrada("Escribe Tu Nombre: ",false );
    int huye  = 0;
 
    while (Tecla != miniwin::ESCAPE)
@@ -110,6 +144,7 @@ int main() {
                   break;
             }
             if(dir != 0){
+               #pragma omp paralle for
                for (size_t i = 0; i < NUM_FANTASMAS; i++)
                {
                   if(huye == 0){
@@ -148,8 +183,10 @@ int main() {
       }
 
       if(Tecla != miniwin::NINGUNA){
-         T.repinta();         
+         T.repinta();        
+         #pragma omp paralle for 
          for(size_t i = 0; i < T.Columnas; i++){
+            #pragma omp paralle for 
             for(size_t j = 0; j < T.Filas; j++){
                if( T.tablero[j][i].getColorDecora() == T.ColorCamino){
                   posComida[i][j] = Comida(i,j,miniwin::AMARILLO, T.ColorCamino);
@@ -167,7 +204,7 @@ int main() {
             }
          }
 
-
+         #pragma omp paralle for 
          for(size_t i = 0; i < NUM_FANTASMAS; i++){
                if(huye == 0 ){
                   listaFantasmas[i]->pinta();
@@ -201,13 +238,14 @@ int main() {
             }
          }
       }
-
+      #pragma omp paralle for 
       for(size_t i = 0; i < NUM_FANTASMAS; i++){
          Fantasma* f = listaFantasmas[i];
             if(pacman.getPosicion().x == f->getPosicion().x &&
                pacman.getPosicion().y == f->getPosicion().y){
                   if( huye == 0){
                      if(T.vidas == 0){
+                        pintaScores(lista_jugadores, nombre, T.puntos, jugadorAdmin);
                         miniwin::vcierra();               
                      }
                      else{
@@ -220,18 +258,18 @@ int main() {
                         break;
                      }                     
                   }else if(T.vidas <= 6){
-                     T.vidas++;
+                     T.puntos += 20;
                      f->setPosicion(9,10);
                         T.repinta();
                         miniwin::color(miniwin::BLANCO);
-                        miniwin::texto(23*TAM, 15*TAM,"Vida Extra");
+                        miniwin::texto(23*TAM, 15*TAM,"Ganas Puntos");
                         miniwin::espera(500);
                   }
 
             } 
       }
 
-      if(T.puntos == MAX_PUNTAJE){
+      if(T.puntos > MAX_PUNTAJE){
          T.repinta();
          miniwin::color(miniwin::BLANCO);
          miniwin::texto(20*TAM, 20*TAM,"Felicidades Ganaste");
@@ -245,10 +283,10 @@ int main() {
          huye--;
       }
    }
-   
+   pintaScores(lista_jugadores, nombre, T.puntos, jugadorAdmin);
+
    miniwin::vcierra();
 
    miniwin::refresca();
-
    return 0;
 }

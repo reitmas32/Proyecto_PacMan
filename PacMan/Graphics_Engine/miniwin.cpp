@@ -589,6 +589,7 @@ void _handlekey(KeySym key) {
    case XK_Right:  _teclas.push(miniwin::DERECHA); break;
    case XK_Up:     _teclas.push(miniwin::ARRIBA); break;
    case XK_Down:   _teclas.push(miniwin::ABAJO); break;
+   case XK_BackSpace: _teclas.push(miniwin::BORRA); break;
    default: {
       if ((key >= int('0') && key <= int('9')) ||
           (key >= int('A') && key <= int('Z'))) {
