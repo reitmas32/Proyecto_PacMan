@@ -15,13 +15,13 @@ void pintaScores(std::vector<Jugador> lista_jugadores, std::string nombre, int s
 
    //Ordeno la lista
    Jugador jugadores[lista_jugadores.size()];
-
+   #pragma omp parallel for
    for (size_t i = 0; i < lista_jugadores.size(); i++)
    {
       jugadores[i] = lista_jugadores[i];
    }
    Heap_Sort(jugadores,lista_jugadores.size(),  DESCENDENTE);
-
+   #pragma omp parallel for
    for (size_t i = 0; i < lista_jugadores.size(); i++)
    {
       lista_jugadores[i] = jugadores[i];
