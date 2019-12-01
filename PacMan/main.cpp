@@ -1,6 +1,5 @@
 #include "Objetos/Tablero.hpp"
 #include "Objetos/Comida.hpp"
-#include <vector>
 #include "Ordenamiento/HeapSort.hpp"
 
 int main() {
