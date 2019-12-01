@@ -13,7 +13,7 @@ int main() {
 
    /*Creacion del Arreglo de Jugadores*/
    Jugadores jugadorAdmin;
-	//std::vector<Jugador> lista_jugadores = jugadorAdmin.getJugadores();
+	 std::vector<Jugador> lista_jugadores = jugadorAdmin.getJugadores();
 
    /*Creación de los fantasmas y pacman*/
    
