@@ -87,8 +87,6 @@ int main() {
    Pacman::pintaBigPacman();
    miniwin::color(miniwin::AMARILLO);
    miniwin::texto(90,210,"<=====Presiona ESPACIO para iniciar=====>");
-   int maxPuntaje = 0;
-   miniwin::texto(170,230,"Best: "+Tablero::intToString(maxPuntaje));
    miniwin::refresca();
 
    int time = 0;

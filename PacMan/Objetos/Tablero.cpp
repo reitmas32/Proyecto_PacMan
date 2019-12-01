@@ -166,13 +166,6 @@ std::string Tablero::intToString(int num){
     return sout.str();
 }
 
-/**
- *@brief Función que convierte una string a un int
- *
- *@param num String que se convertira a int
- *
- *@return la string convertida a int
- */
 size_t Tablero::stringToInt(std::string num){
    return stoi(num,nullptr,10);
 }
