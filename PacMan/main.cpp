@@ -1,9 +1,7 @@
 #include "Objetos/Tablero.hpp"
 #include "Objetos/Comida.hpp"
-
-//using namespace miniwin;
-
-
+#include <vector>
+#include "Ordenamiento/HeapSort.hpp"
 
 int main() {
    miniwin::vredimensiona(400, 300);
@@ -13,7 +11,10 @@ int main() {
    Tablero T = Tablero(miniwin::GRIS, miniwin::NEGRO);
    T.creaMundo();
    T.creaGrafo();
-   //T.pinta();
+
+   /*Creacion del Arreglo de Jugadores*/
+   Jugadores jugadorAdmin;
+	//std::vector<Jugador> lista_jugadores = jugadorAdmin.getJugadores();
 
    /*Creación de los fantasmas y pacman*/
    
@@ -200,7 +201,6 @@ int main() {
                }
             }
          }
-         //std::cout<<pacman.getPosicion().x<<", "<<pacman.getPosicion().y<<std::endl;
       }
 
       for(size_t i = 0; i < NUM_FANTASMAS; i++){

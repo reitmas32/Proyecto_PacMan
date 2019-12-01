@@ -1,4 +1,3 @@
-
 #include "HeapSort.hpp"
 
 void print( Jugador jugadores[], int tam){
@@ -17,21 +16,23 @@ void swap(Jugador* num1, Jugador* num2){
 void heapify_max(Jugador jugadores[], int tam, int k) 
 {
     int largest=k;
-    int left = 2*k + 1; /* left = 2*i + 1 */
-    int right = 2*k + 2; /* right = 2*i + 2 */
+    int left = 2*k + 1; // left = 2*i + 1 
+    int right = 2*k + 2; // right = 2*i + 2 
   
-    /* Si el hijo izquierdo es mas grande que la raíz. */
+    // If left child is larger than root 
     if (left < tam && jugadores[left] > jugadores[largest]) 
         largest = left; 
   
-    /* Si el hijo derecho es mas grande que el más grande hasta ahora. */
+    // If right child is larger than largest so far 
     if (right < tam && jugadores[right] > jugadores[largest]) 
         largest = right; 
 
-    /* Si el más grande no es la raíz. */
+    // If largest is not root 
     if (largest != k) 
     { 
-        swap(&jugadores[k], &jugadores[largest]);
+        swap(&jugadores[k], &jugadores[largest]); 
+  
+        // Recursively heapify the affected sub-tree 
         heapify_max(jugadores, k, largest); 
     } 
 }
@@ -39,21 +40,23 @@ void heapify_max(Jugador jugadores[], int tam, int k)
 void heapify_min(Jugador jugadores[], int tam, int k) 
 { 
     int smallest=k;
-    int left = 2*k + 1; /* left = 2*i + 1  */
-    int right = 2*k + 2; /* right = 2*i + 2 */
+    int left = 2*k + 1; // left = 2*i + 1 
+    int right = 2*k + 2; // right = 2*i + 2 
   
-    /* Si el hijo izquierdo es mas grande que la raíz. */
+    // If left child is larger than root 
     if (left < tam && jugadores[left] < jugadores[smallest]) 
         smallest = left; 
   
-    /* Si el hijo derecho es mas grande que el más grande hasta ahora. */
+    // If right child is larger than largest so far 
     if (right < tam && jugadores[right] < jugadores[smallest]) 
         smallest = right; 
 
-    /* Si el más grande no es la raíz. */
+    // If largest is not root 
     if (smallest != k) 
     { 
         swap(&jugadores[k], &jugadores[smallest]); 
+  
+        // Recursively heapify the affected sub-tree 
         heapify_min(jugadores, k, smallest); 
     } 
 }
@@ -76,9 +79,9 @@ void Heap_Sort(Jugador jugadores[], int tam, int direction){
         build_max_heap(jugadores, tam);
         for (int i=tam-1; i>=0; i--) 
         { 
-            /* Mover la raíz actual al final. */
+            // Move current root to end 
             swap(&jugadores[0], &jugadores[i]); 
-            /* Invocar heapify_max en el montículo reducido. */
+            // call max heapify on the reduced heap 
             heapify_max(jugadores, i, 0); 
         }
     }
@@ -86,9 +89,9 @@ void Heap_Sort(Jugador jugadores[], int tam, int direction){
         build_min_heap(jugadores, tam);
         for (int i=tam-1; i>=0; i--) 
         { 
-            /* Mover la raíz actual al final. */
+            // Move current root to end 
             swap(&jugadores[0], &jugadores[i]); 
-            /* Invocar heapify_max en el montículo reducido. */
+            // call max heapify on the reduced heap 
             heapify_min(jugadores, i, 0); 
         }
     }

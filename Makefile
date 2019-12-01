@@ -28,11 +28,14 @@ Vertex.o:PacMan/Estructuras/Grafo/Recursos/Vertex.hpp PacMan/Estructuras/Grafo/R
 	g++ -Wall -g -DDEBUG  -c "PacMan/Estructuras/Grafo/Recursos/Vertex.cpp" -o "PacMan/bin/Vertex.o"
 
 #---------------Oredeanamiento-------------------#
-HeapSort.o:
-	g++ -Wall -g -DDEBUG  -c "PacMan/Oredeanamiento/HeapSort.cpp" -o "PacMan/bin/HeapSort.o"
+HeapSort.o:PacMan/Ordenamiento/HeapSort.hpp PacMan/Ordenamiento/HeapSort.cpp
+	g++ -Wall -g -DDEBUG  -c "PacMan/Ordenamiento/HeapSort.cpp" -o "PacMan/bin/HeapSort.o"
+
+Jugadores.o:PacMan/Ordenamiento/Jugadores.hpp PacMan/Ordenamiento/Jugadores.cpp
+	g++ -Wall -g -DDEBUG  -c "PacMan/Ordenamiento/Jugadores.cpp" -o "PacMan/bin/Jugadores.o"
 #-------------------Main-------------------------#
 main.o:PacMan/main.cpp miniwin.o
 	g++ -Wall -g -DDEBUG  -c "PacMan/main.cpp" -o "PacMan/bin/main.o"
 
-Pacman:main.o miniwin.o Cuadro.o Figura.o Fantasma.o Pacman.o Comida.o Tablero.o Grafo.o Vertex.o HeapSort.o
-	g++  -o "PacMan/bin/PacMan" "PacMan/bin/main.o" "PacMan/bin/miniwin.o" "PacMan/bin/Cuadro.o" "PacMan/bin/Figura.o" "PacMan/bin/Fantasma.o" "PacMan/bin/Pacman.o" "PacMan/bin/Comida.o" "PacMan/bin/Tablero.o" "PacMan/bin/Grafo.o" "PacMan/bin/Vertex.o" "PacMan/bin/HeapSort.o" -pthread  -lX11
+Pacman:main.o miniwin.o Cuadro.o Figura.o Fantasma.o Pacman.o Comida.o Tablero.o Grafo.o Vertex.o HeapSort.o Jugadores.o
+	g++  -o "PacMan/bin/PacMan" "PacMan/bin/main.o" "PacMan/bin/miniwin.o" "PacMan/bin/Cuadro.o" "PacMan/bin/Figura.o" "PacMan/bin/Fantasma.o" "PacMan/bin/Pacman.o" "PacMan/bin/Comida.o" "PacMan/bin/Tablero.o" "PacMan/bin/Grafo.o" "PacMan/bin/Vertex.o" "PacMan/bin/HeapSort.o" "PacMan/bin/Jugadores.o" -pthread  -lX11
