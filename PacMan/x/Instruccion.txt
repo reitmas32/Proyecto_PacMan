@@ -1,1 +1,0 @@
-g++ main.cpp ../Estructuras/Grafo/Grafo.cpp ../Estructuras/Grafo/Recursos/Vertex/Vertex.cpp ../Estructuras/Grafo/Recursos/Administrador/Administrador.cpp -o main.out
